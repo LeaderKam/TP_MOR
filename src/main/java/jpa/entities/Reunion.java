@@ -1,11 +1,14 @@
 package jpa.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 public class Reunion implements Serializable {
@@ -18,8 +21,8 @@ public class Reunion implements Serializable {
 	private String resume_reunion;
 	private String date_reunion;
 	
-	@ManyToMany(mappedBy = "reunion_user",fetch = FetchType.LAZY)
-	private List<User> users; 
+	@ManyToMany(mappedBy="reunion",fetch=FetchType.LAZY)
+	private List<User> users= new ArrayList<User>(); 
 	
 	public Reunion() {
 		super();

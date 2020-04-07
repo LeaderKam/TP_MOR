@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
+import jpa.entities.Reunion;
+import jpa.entities.User;
 import test.testjpa.domain.Department;
 
 public class JpaTest {
@@ -18,8 +20,13 @@ public class JpaTest {
 		tx.begin();
 		
 		
-		Department d=new Department();
-
+//		Department d=new Department();
+//		User u= new User();
+//		manager.persist(u);
+//
+//		
+//		Reunion r= new Reunion();
+//		
 
 		try {
 

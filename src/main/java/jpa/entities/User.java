@@ -1,6 +1,7 @@
 package jpa.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -22,15 +23,15 @@ public class User implements Serializable {
 
 	private String prenom;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_sondage", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "sondage_id") })
-	private List<Sondage> sondages;
+	private List<Sondage> sondages = new ArrayList<Sondage>();
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_reunion", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "reunion_id") })
-	private List<Reunion> reunions;
+	private List<Reunion> reunions= new ArrayList<Reunion>();
 
 	public User() {
 		super();
