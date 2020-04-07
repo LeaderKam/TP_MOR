@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
+import test.testjpa.domain.Department;
+
 public class JpaTest {
 
 	/**
@@ -14,6 +16,9 @@ public class JpaTest {
 		EntityManager manager = EntityManagerHelper.getEntityManager();
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
+		
+		
+		Department d=new Department();
 
 
 		try {
