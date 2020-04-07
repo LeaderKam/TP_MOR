@@ -1,2 +1,1 @@
-# TP_MOR
-TP Mapping Objet Relationnel
+# Template de projet pour le TP JPA 2019 UniR
