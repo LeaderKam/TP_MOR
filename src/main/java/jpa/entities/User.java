@@ -11,26 +11,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User implements Serializable {
 
-	@Id
-	@GeneratedValue
+
 	private Integer user_id;
 
 	private String nom;
 
 	private String prenom;
+	
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_sondage", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "sondage_id") })
-	private List<Sondage> sondages = new ArrayList<Sondage>();
+	private List<User_sondage> user_sondages = new ArrayList<User_sondage>();
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_reunion", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "reunion_id") })
+
 	private List<Reunion> reunions= new ArrayList<Reunion>();
 
 	public User() {
@@ -44,6 +40,8 @@ public class User implements Serializable {
 		this.prenom = prenom;
 	}
 
+	@Id
+	@GeneratedValue
 	public Integer getUser_id() {
 		return user_id;
 	}
@@ -67,5 +65,31 @@ public class User implements Serializable {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_reunion", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "reunion_id") })
+	public List<Reunion> getReunions() {
+		return reunions;
+	}
+
+	public void setReunions(List<Reunion> reunions) {
+		this.reunions = reunions;
+	}
+
+	@OneToMany(mappedBy="user",fetch=FetchType.LAZY)
+	public List<User_sondage> getUser_sondages() {
+		return user_sondages;
+	}
+
+	public void setUser_sondages(List<User_sondage> user_sondages) {
+		this.user_sondages = user_sondages;
+	}
+
+
+	
+	
+	
+	
 
 }

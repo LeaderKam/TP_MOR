@@ -4,24 +4,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Reunion implements Serializable {
   
-	@Id
-	@GeneratedValue
+	
 	private Integer reunion_id;
 	
 	private String intitule_reunion;
 	private String resume_reunion;
-	private String date_reunion;
+	private String date_reunion;	
 	
-	@ManyToMany(mappedBy="reunion",fetch=FetchType.LAZY)
+	
 	private List<User> users= new ArrayList<User>(); 
 	
 	public Reunion() {
@@ -33,6 +35,8 @@ public class Reunion implements Serializable {
 		this.resume_reunion = resume_reunion;
 		this.date_reunion = date_reunion;
 	}
+	@Id
+	@GeneratedValue
 	public Integer getReunion_id() {
 		return reunion_id;
 	}
@@ -57,5 +61,14 @@ public class Reunion implements Serializable {
 	public void setDate_reunion(String date_reunion) {
 		this.date_reunion = date_reunion;
 	}
+	
+	@ManyToMany(mappedBy="reunions",fetch=FetchType.LAZY)
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	
 	
 }

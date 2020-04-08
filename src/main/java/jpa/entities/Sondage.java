@@ -2,42 +2,51 @@ package jpa.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Sondage implements Serializable {
 	
-	@Id
-	@GeneratedValue
+	
 	private Integer sondage_id;
 	
 	private String intitule_sondage;
 	
-	private String date_sondage;
+	private Date date_sondage;
 	
-	@ManyToMany(mappedBy="sondages",fetch=FetchType.LAZY)
-	private List<User> users = new ArrayList<User>();
+	private List<User_sondage> user_sondages = new ArrayList<User_sondage>();
 	
+
+	@OneToMany(mappedBy="sondage",fetch=FetchType.LAZY)
+	public List<User_sondage> getUser_sondages() {
+		return user_sondages;
+	}
+
+	public void setUser_sondages(List<User_sondage> user_sondages) {
+		this.user_sondages = user_sondages;
+	}
 
 	public Sondage() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Sondage(String intitule_sondage, String date_sondage) {
+	public Sondage(String intitule_sondage, Date date_sondage) {
 		super();
 		this.intitule_sondage = intitule_sondage;
 		this.date_sondage = date_sondage;
 	}
 
+	@Id
+	@GeneratedValue
 	public Integer getSondage_id() {
 		return sondage_id;
 	}
@@ -54,13 +63,15 @@ public class Sondage implements Serializable {
 		this.intitule_sondage = intitule_sondage;
 	}
 
-	public String getDate_sondage() {
+	public Date getDate_sondage() {
 		return date_sondage;
 	}
 
-	public void setDate_sondage(String date_sondage) {
+	public void setDate_sondage(Date date_sondage) {
 		this.date_sondage = date_sondage;
 	}
+
+	
 	
 	
 	
