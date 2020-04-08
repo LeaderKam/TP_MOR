@@ -23,6 +23,7 @@ public class User implements Serializable {
 
 	private String prenom;
 	
+	private List<Sondage> sondages= new ArrayList<Sondage>();
 
 	private List<User_sondage> user_sondages = new ArrayList<User_sondage>();
 
@@ -84,6 +85,16 @@ public class User implements Serializable {
 
 	public void setUser_sondages(List<User_sondage> user_sondages) {
 		this.user_sondages = user_sondages;
+	}
+
+	@OneToMany(mappedBy = "user",fetch=FetchType.LAZY)
+	public List<Sondage> getSondages() {
+		return sondages;
+	}
+
+	
+	public void setSondages(List<Sondage> sondages) {
+		this.sondages = sondages;
 	}
 
 

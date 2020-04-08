@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -21,6 +22,8 @@ public class Sondage implements Serializable {
 	private String intitule_sondage;
 	
 	private Date date_sondage;
+	
+	private User user;
 	
 	private List<User_sondage> user_sondages = new ArrayList<User_sondage>();
 	
@@ -39,10 +42,14 @@ public class Sondage implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Sondage(String intitule_sondage, Date date_sondage) {
+	
+	
+	public Sondage(String intitule_sondage, Date date_sondage, User user) {
 		super();
 		this.intitule_sondage = intitule_sondage;
 		this.date_sondage = date_sondage;
+		this.user = user;
+		this.user_sondages = user_sondages;
 	}
 
 	@Id
@@ -69,6 +76,15 @@ public class Sondage implements Serializable {
 
 	public void setDate_sondage(Date date_sondage) {
 		this.date_sondage = date_sondage;
+	}
+
+	@ManyToOne
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	
