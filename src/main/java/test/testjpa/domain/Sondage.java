@@ -5,20 +5,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class Sondage implements Serializable {
 
     private Long sondage_id;
-    private String intitule_son;
+    private String intitule_sondage;
+    private Date date_sondage;
     private Employee employee;
 
-    public Sondage(Long sondage_id) {
+    public Sondage() {
 
     }
 
-    public Sondage(String intitule_son, Employee employee) {
-        this.intitule_son = intitule_son;
+    public Sondage(String intitule_son, Date date, Employee employee) {
+        this.intitule_sondage = intitule_son;
+        this.date_sondage=date;
         this.employee = employee;
     }
 
@@ -33,11 +36,19 @@ public class Sondage implements Serializable {
     }
 
     public String getIntitule_son() {
-        return intitule_son;
+        return intitule_sondage;
     }
 
     public void setIntitule_son(String intitule_son) {
-        this.intitule_son = intitule_son;
+        this.intitule_sondage = intitule_son;
+    }
+
+    public Date getDate_sondage() {
+        return date_sondage;
+    }
+
+    public void setDate_sondage(Date date_sondage) {
+        this.date_sondage = date_sondage;
     }
 
     @ManyToOne

@@ -4,7 +4,9 @@ import javax.persistence.*;
 
 import test.testjpa.domain.Department;
 import test.testjpa.domain.Employee;
+import test.testjpa.domain.Sondage;
 
+import java.util.Date;
 import java.util.List;
 
 public class JpaTest {
@@ -37,6 +39,7 @@ public class JpaTest {
 
 		try {
 			test.createEmployees();
+			test.createSondage();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,12 +65,13 @@ test.listEmployees();
 
 	private void createSondage() {
 		int numOfSondage = manager.createQuery("Select a From Sondage a",
-				Employee.class).getResultList().size();
+				Sondage.class).getResultList().size();
 		if (numOfSondage == 0) {
-			Employee employee = new Employee()
+			Department department = new Department("IA");
+			Employee employee = new Employee("kam",department);
 			manager.persist(department);
-			manager.persist(new Employee("Jakab Gipsz",department));
-			manager.persist(new Employee("Captain Nemo",department));
+			manager.persist(employee);
+			manager.persist(new Sondage("data",new Date(),employee));
 		}
 	}
 
