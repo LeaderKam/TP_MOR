@@ -59,6 +59,18 @@ test.listEmployees();
 			manager.persist(new Employee("Captain Nemo",department));
 		}
 	}
+
+	private void createSondage() {
+		int numOfSondage = manager.createQuery("Select a From Sondage a",
+				Employee.class).getResultList().size();
+		if (numOfSondage == 0) {
+			Employee employee = new Employee()
+			manager.persist(department);
+			manager.persist(new Employee("Jakab Gipsz",department));
+			manager.persist(new Employee("Captain Nemo",department));
+		}
+	}
+
 	private void listEmployees() {
 		List<Employee> resultList = manager.createQuery("Select a From Employee a",
 				Employee.class).getResultList();

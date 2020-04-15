@@ -17,8 +17,7 @@ public class Sondage implements Serializable {
 
     }
 
-    public Sondage(Long sondage_id, String intitule_son, Employee employee) {
-        this.sondage_id = sondage_id;
+    public Sondage(String intitule_son, Employee employee) {
         this.intitule_son = intitule_son;
         this.employee = employee;
     }

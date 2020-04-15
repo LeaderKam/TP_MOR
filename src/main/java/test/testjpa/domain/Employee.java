@@ -68,8 +68,8 @@ public class Employee implements Serializable {
 		return sondages;
 	}
 
-	public void setEmployees(List<Sondage> sondagess) {
-		this.sondages = sondagess;
+	public void setSondages(List<Sondage> sondages) {
+		this.sondages = sondages;
 	}
 
 
