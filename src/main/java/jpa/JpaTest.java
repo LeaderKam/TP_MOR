@@ -15,7 +15,7 @@ public class JpaTest {
 	}
 
 	/**
-	 * @param args
+	 * @param args:string
 	 */
 	public static void main(String[] args) {
 		EntityManagerFactory factory =
