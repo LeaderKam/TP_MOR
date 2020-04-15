@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import test.testjpa.domain.Department;
 import test.testjpa.domain.Employee;
+import test.testjpa.domain.Reunion;
 import test.testjpa.domain.Sondage;
 
 import java.util.Date;
@@ -40,6 +41,7 @@ public class JpaTest {
 		try {
 			test.createEmployees();
 			test.createSondage();
+			test.creatReunion();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,6 +52,17 @@ test.listEmployees();
 		System.out.println(".. done");
 		//EntityManagerHelper.closeEntityManagerFactory();
 		//		factory.close();
+	}
+
+	private void creatReunion() {
+		int numOfEmployees = manager.createQuery("Select a From Reunion a",
+				Reunion.class).getResultList().size();
+		if (numOfEmployees == 0) {
+			Department department = new Department("java");
+			manager.persist(department);
+			manager.persist(new Employee("Jakab Gipsz",department));
+			manager.persist(new Employee("Captain Nemo",department));
+		}
 	}
 
 	private void createEmployees() {
