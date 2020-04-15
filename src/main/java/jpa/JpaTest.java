@@ -9,7 +9,7 @@ import java.util.List;
 
 public class JpaTest {
 
-	private EntityManager manager;
+	private final EntityManager manager;
 	public JpaTest(EntityManager manager) {
 		this.manager = manager;
 	}
@@ -42,10 +42,10 @@ public class JpaTest {
 		}
 		tx.commit();
 
-//test.listEmployees();
+test.listEmployees();
 		manager.close();
 		System.out.println(".. done");
-		EntityManagerHelper.closeEntityManagerFactory();
+		//EntityManagerHelper.closeEntityManagerFactory();
 		//		factory.close();
 	}
 
