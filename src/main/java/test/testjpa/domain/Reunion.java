@@ -9,6 +9,7 @@ import java.util.List;
 public class Reunion {
     private Long reunion_id;
     private String intitule_reunion;
+    private String resume_reunion;
     private Date date_reunion;
     private List<User_reunion> user_reunions=new ArrayList<User_reunion>();
 
@@ -17,8 +18,9 @@ public class Reunion {
 
     }
 
-    public Reunion(String intitule_reunion, Date date_reunion) {
+    public Reunion(String intitule_reunion,String resume, Date date_reunion) {
         this.intitule_reunion = intitule_reunion;
+        this.resume_reunion=resume;
         this.date_reunion = date_reunion;
     }
 
@@ -38,6 +40,14 @@ public class Reunion {
 
     public void setIntitule_reunion(String intitule_reunion) {
         this.intitule_reunion = intitule_reunion;
+    }
+
+    public String getResume_reunion() {
+        return resume_reunion;
+    }
+
+    public void setResume_reunion(String resume_reunion) {
+        this.resume_reunion = resume_reunion;
     }
 
     public Date getDate_reunion() {

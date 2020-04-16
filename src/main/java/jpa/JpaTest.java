@@ -58,10 +58,10 @@ test.listEmployees();
 		int numOfEmployees = manager.createQuery("Select a From Reunion a",
 				Reunion.class).getResultList().size();
 		if (numOfEmployees == 0) {
-			Department department = new Department("java");
+			Department department = new Department("jpa");
 			manager.persist(department);
-			manager.persist(new Employee("Jakab Gipsz",department));
-			manager.persist(new Employee("Captain Nemo",department));
+			manager.persist(new Employee("koussaila",department));
+			manager.persist(new Reunion("Captain Nemo","reunion test",new Date()));
 		}
 	}
 
