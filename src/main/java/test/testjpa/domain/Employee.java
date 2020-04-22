@@ -23,6 +23,7 @@ public class Employee implements Serializable {
 	private List<Sondage> sondages=new ArrayList<Sondage>();
 	private Department department;
 	private List<User_reunion> user_reunions=new ArrayList<User_reunion>();
+	private List<User_sondage> user_sondages=new ArrayList<User_sondage>();
 
 	public Employee() {
 
@@ -81,6 +82,17 @@ public class Employee implements Serializable {
 	public void setUser_reunions(List<User_reunion> user_reunions) {
 		this.user_reunions = user_reunions;
 	}
+
+	@OneToMany(mappedBy = "employee",cascade = CascadeType.PERSIST)
+	public List<User_sondage> getUser_sondages() {
+		return user_sondages;
+	}
+
+	public void setUser_sondages(List<User_sondage> user_sondages) {
+		this.user_sondages = user_sondages;
+	}
+
+
 
 	@Override
 	public String toString() {

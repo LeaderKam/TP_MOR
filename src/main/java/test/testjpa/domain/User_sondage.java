@@ -3,6 +3,7 @@ package test.testjpa.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class User_sondage {
@@ -30,6 +31,7 @@ public class User_sondage {
         this.user_sondage_id = user_sondage_id;
     }
 
+    @ManyToOne
     public Employee getEmployee() {
         return employee;
     }
@@ -38,6 +40,7 @@ public class User_sondage {
         this.employee = employee;
     }
 
+    @ManyToOne
     public Sondage getSondage() {
         return sondage;
     }

@@ -1,11 +1,10 @@
 package test.testjpa.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Sondage implements Serializable {
@@ -14,6 +13,7 @@ public class Sondage implements Serializable {
     private String intitule_sondage;
     private Date date_sondage;
     private Employee employee;
+    private List<User_sondage> user_sondages=new ArrayList<User_sondage>();
 
     public Sondage() {
 
@@ -58,5 +58,14 @@ public class Sondage implements Serializable {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    @OneToMany(mappedBy = "employee",cascade = CascadeType.PERSIST)
+    public List<User_sondage> getUser_sondages() {
+        return user_sondages;
+    }
+
+    public void setUser_sondages(List<User_sondage> user_sondages) {
+        this.user_sondages = user_sondages;
     }
 }
