@@ -52,8 +52,7 @@ test.listEmployees();
 	}
 
 	private void creatReunion() {
-		int numOfEmployees = manager.createQuery("Select a From Reunion a",
-				Reunion.class).getResultList().size();
+		int numOfEmployees = manager.createQuery("Select a From Reunion a",Reunion.class).getResultList().size();
 		if (numOfEmployees == 0) {
 			Department department = new Department("jpa");
 			manager.persist(department);
@@ -82,6 +81,13 @@ test.listEmployees();
 			manager.persist(new Employee("Jakab Gipsz",department));
 			manager.persist(new Employee("Captain Nemo",department));
 		}
+		Department departement= new Department("ML");
+		Employee employee=new Employee("salam",departement);
+		manager.persist(employee);
+		Sondage sondage=new Sondage("data", new Date(),employee);
+		manager.persist(sondage);
+		User_sondage user_sondage=new User_sondage(employee,sondage);
+		manager.persist(user_sondage);
 	}
 
 	private void createSondage() {
