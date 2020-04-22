@@ -2,10 +2,7 @@ package jpa;
 
 import javax.persistence.*;
 
-import test.testjpa.domain.Department;
-import test.testjpa.domain.Employee;
-import test.testjpa.domain.Reunion;
-import test.testjpa.domain.Sondage;
+import test.testjpa.domain.*;
 
 import java.util.Date;
 import java.util.List;
@@ -62,7 +59,18 @@ test.listEmployees();
 			manager.persist(department);
 			manager.persist(new Employee("koussaila",department));
 			manager.persist(new Reunion("Captain Nemo","reunion test",new Date()));
+
+
 		}
+		Department department = new Department("jpa");
+		manager.persist(department);
+		Employee marius=new Employee("marius",department);
+
+		manager.persist(marius);
+
+		Reunion reu=new Reunion("data ia","c'est un test",new Date());
+		manager.persist(reu);
+		manager.persist(new User_reunion(marius,reu));
 	}
 
 	private void createEmployees() {
