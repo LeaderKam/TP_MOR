@@ -86,7 +86,7 @@ test.listEmployees();
 		manager.persist(employee);
 		Sondage sondage=new Sondage("data", new Date(),employee);
 		manager.persist(sondage);
-		User_sondage user_sondage=new User_sondage(employee,sondage);
+		User_sondage user_sondage=new User_sondage(employee,sondage,new Date());
 		manager.persist(user_sondage);
 	}
 
