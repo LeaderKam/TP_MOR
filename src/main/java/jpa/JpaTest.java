@@ -98,6 +98,7 @@ test.listEmployees();
 			Employee employee = new Employee("kam",department);
 			manager.persist(department);
 			manager.persist(employee);
+			//new Sondage_date();
 			manager.persist(new Sondage("data",new Date(),employee));
 		}
 	}
