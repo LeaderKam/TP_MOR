@@ -38,7 +38,11 @@ public class JpaTest {
 		try {
 			test.createEmployees();
 			test.createSondage();
-			test.creatReunion();
+			test.createReunion();
+			test.nSelect();
+			test.createUserSondageDateLieu();
+			test.createUserSondageDate();
+			test.createUserSondageLieu();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +55,7 @@ test.listEmployees();
 		//		factory.close();
 	}
 
-	private void creatReunion() {
+	private void createReunion() {
 		int numOfEmployees = manager.createQuery("Select a From Reunion a",Reunion.class).getResultList().size();
 		if (numOfEmployees == 0) {
 			Department department = new Department("jpa");
@@ -72,6 +76,24 @@ test.listEmployees();
 		manager.persist(new User_reunion(marius,reu));
 	}
 
+	private void nSelect(){
+
+		for (int j = 0; j < 5000; j++) {
+
+
+			Department d = new Department("dep"+j);
+			manager.persist(d);
+			for (int i = 0; i < 2; i++) {
+				Employee e = new Employee("emp_"+j + "_"+i);
+				manager.persist(e);
+				e.setDepartment(d);
+				d.getEmployees().add(e);
+			}
+
+
+		}
+	}
+
 	private void createEmployees() {
 		int numOfEmployees = manager.createQuery("Select a From Employee a",
 				Employee.class).getResultList().size();
@@ -81,13 +103,7 @@ test.listEmployees();
 			manager.persist(new Employee("Jakab Gipsz",department));
 			manager.persist(new Employee("Captain Nemo",department));
 		}
-		Department departement= new Department("ML");
-		Employee employee=new Employee("salam",departement);
-		manager.persist(employee);
-		Sondage sondage=new Sondage("data", new Date(),employee);
-		manager.persist(sondage);
-		User_sondage user_sondage=new User_sondage(employee,sondage,new Date());
-		manager.persist(user_sondage);
+
 	}
 
 	private void createSondage() {
@@ -101,6 +117,35 @@ test.listEmployees();
 			//new Sondage_date();
 			manager.persist(new Sondage("data",new Date(),employee));
 		}
+	}
+
+	private void createUserSondageDate(){
+		Department departement= new Department("ML");
+		Employee employee=new Employee("salam",departement);
+		manager.persist(employee);
+		Sondage sondage=new Sondage("data", new Date(),employee);
+		manager.persist(sondage);
+		User_sondage user_sondage=new Sondage_date(employee,sondage,new Date());
+		manager.persist(user_sondage);
+	}
+
+	private void createUserSondageLieu(){
+		Department departement= new Department("ML");
+		Employee employee=new Employee("salam",departement);
+		manager.persist(employee);
+		Sondage sondage=new Sondage("data", new Date(),employee);
+		manager.persist(sondage);
+		User_sondage user_sondage=new Sondage_lieu(employee,sondage,"Rennes");
+		manager.persist(user_sondage);
+	}
+	private void createUserSondageDateLieu(){
+		Department departement= new Department("MI");
+		Employee employee=new Employee("salam",departement);
+		manager.persist(employee);
+		Sondage sondage=new Sondage("data", new Date(),employee);
+		manager.persist(sondage);
+		User_sondage user_sondage=new Sondage_lieu_date(employee,sondage,"Rennes",new Date());
+		manager.persist(user_sondage);
 	}
 
 	private void listEmployees() {

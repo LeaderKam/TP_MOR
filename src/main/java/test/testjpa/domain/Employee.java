@@ -56,7 +56,7 @@ public class Employee implements Serializable {
 		this.name = name;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	public Department getDepartment() {
 		return department;
 	}
@@ -65,7 +65,7 @@ public class Employee implements Serializable {
 		this.department = department;
 	}
 
-	@OneToMany(mappedBy = "employee", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
 	public List<Sondage> getSondages() {
 		return sondages;
 	}
@@ -74,7 +74,7 @@ public class Employee implements Serializable {
 		this.sondages = sondages;
 	}
 
-	@OneToMany(mappedBy = "employee",cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
 	public List<User_reunion> getUser_reunions() {
 		return user_reunions;
 	}
@@ -83,7 +83,7 @@ public class Employee implements Serializable {
 		this.user_reunions = user_reunions;
 	}
 
-	@OneToMany(mappedBy = "employee",cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
 	public List<User_sondage> getUser_sondages() {
 		return user_sondages;
 	}

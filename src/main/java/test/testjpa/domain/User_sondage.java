@@ -10,7 +10,6 @@ public abstract class User_sondage {
     private Long user_sondage_id;
     private Employee employee;
     private Sondage sondage;
-    private Date date_sondage;
 
     public User_sondage() {
 
