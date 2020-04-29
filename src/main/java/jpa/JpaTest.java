@@ -3,13 +3,18 @@ package jpa;
 import javax.persistence.*;
 
 import test.testjpa.domain.*;
+import test.testjpa.domain.strategy.ChoixMajoritaire;
+import test.testjpa.domain.strategy.Context;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class JpaTest {
 
 	private final EntityManager manager;
+
 	public JpaTest(EntityManager manager) {
 		this.manager = manager;
 	}
@@ -18,6 +23,7 @@ public class JpaTest {
 	 * @param args:string
 	 */
 	public static void main(String[] args) {
+
 		EntityManagerFactory factory =
 				Persistence.createEntityManagerFactory("mysql");
 		//EntityManager manager = EntityManagerHelper.getEntityManager();
@@ -36,10 +42,11 @@ public class JpaTest {
 //		
 
 		try {
+
 			test.createEmployees();
 			test.createSondage();
 			test.createReunion();
-			test.nSelect();
+			//test.nSelect();
 			test.createUserSondageDateLieu();
 			test.createUserSondageDate();
 			test.createUserSondageLieu();
@@ -49,7 +56,14 @@ public class JpaTest {
 		tx.commit();
 
 test.listEmployees();
+		List<User_sondage> user_reunionsA = manager.createQuery("Select a From User_sondage a",User_sondage.class).getResultList();
+		List<Date> dateTest=new ArrayList<Date>();
+		for (User_sondage a:user_reunionsA){
+			dateTest.add(a.getSondage().getDate_sondage());
+			System.out.println("*************** \n"+ a.getSondage().getDate_sondage());
+		}
 		manager.close();
+
 		System.out.println(".. done");
 		//EntityManagerHelper.closeEntityManagerFactory();
 		//		factory.close();
@@ -61,6 +75,7 @@ test.listEmployees();
 			Department department = new Department("jpa");
 			manager.persist(department);
 			manager.persist(new Employee("koussaila",department));
+
 			manager.persist(new Reunion("Captain Nemo","reunion test",new Date()));
 
 
@@ -69,6 +84,11 @@ test.listEmployees();
 		manager.persist(department);
 		Employee marius=new Employee("marius",department);
 
+
+		Context ctx=new Context(new ChoixMajoritaire());
+		//ctx.appliquerStrategy(new ChoixMajoritaire(),);
+		ctx.setStrategy(new ChoixMajoritaire());
+		//ctx.appliquerStrategy();
 		manager.persist(marius);
 
 		Reunion reu=new Reunion("data ia","c'est un test",new Date());
