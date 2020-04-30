@@ -14,38 +14,23 @@
                 crossorigin="anonymous"></script>
 </head>
 <body>
+<nav class="navbar navbar-light bg-light justify-content-between">
+  <a class="navbar-brand">Navbar</a>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>
 	<center>
 		<h1 class="card">User Management</h1>
         <h2>
-        	<a href="new">Add New User</a>
+        	<a class="btn btn-outline-success" href="new">Add New User</a>
         	&nbsp;&nbsp;&nbsp;
-        	<a href="list-user?page=1">List All Users</a>
+        	<a class="btn btn-primary" href="list-user?page=1">List All Users</a>
 
         </h2>
 	</center>
-    <div align="center">
-        <table border="1" cellpadding="5">
-            <caption><h2>List of Users</h2></caption>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
 
-                <th>Actions</th>
-            </tr>
-            <c:forEach var="user" items="${listUser}">
-                <tr>
-                    <td><c:out value="${user.user_id}" /></td>
-                    <td><c:out value="${user.name}" /></td>
-
-                    <td>
-                    	<a href="edit?id=<c:out value='${user.user_id}' />">Edit</a>
-                    	&nbsp;&nbsp;&nbsp;&nbsp;
-                    	<a href="delete?id=<c:out value='${user.id}' />">Delete</a>
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
-</div>
 <div style="width:500px;margin-left:700px;">
          <table class="table table-striped" width="500px;" align="center">
               <thead class="table-dark">
@@ -64,7 +49,7 @@
               int total=(int)(std.size()/1000);
               int end=0;
               if(pageid==1){end=total;}
-              else{
+             else{
                   pageid=pageid-1;
                   pageid=pageid*total;
                   end=pageid+total;
@@ -75,9 +60,9 @@
                     <th scope="row"><%=std.get(i-1).getId()%></th>
                         <td><%=std.get(i-1).getName()%></td>
                         <td>
-                            <a class="btn btn-primary" href="edit?id=<c:out value='${user.user_id}' />">Edit</a>
+                            <a class="btn btn-primary" href="edit?id=<%=std.get(i-1).getId()%>">Edit</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a class="btn btn-danger " href="delete?id=<c:out value='${user.id}' />">Delete</a>
+                            <a class="btn btn-danger " href="delete?id=<%=std.get(i-1).getId()%>">Delete</a>
                         </td>
                     </tr>
               <%}%>
@@ -94,6 +79,21 @@
           <a href="list-user?page=8">8</a>
           <a href="list-user?page=9">9</a>
           <a href="list-user?page=10">10</a>
+          <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="list-user?page=1">1</a></li>
+              <li class="page-item active">
+                <a class="page-link" href="list-user?page=2">2 <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="page-item"><a class="page-link" href="list-user?page=3">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
     </div>
 </body>
 </html>

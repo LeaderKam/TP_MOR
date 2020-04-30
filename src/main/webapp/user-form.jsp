@@ -4,70 +4,74 @@
 <html>
 <head>
 	<title>User Management Application</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <style>
+        #largeur{
+        border:red;
+       border-radius: 10px;
+        width:700px;
+        margin-top:-100px;
+        height:300px;
+        padding:100px 80px;
+        background:#EFEFEF;
+        position:relative;
+        }
+        #head{
+        margin-top:0px;
+        height:400px;
+        background:blue;
+        position:relative;
+        }
+        #tout{
+        position:absolute;
+        width:100%;height:100vh;
+        }
 
+    </style>
 </head>
 <body>
-	<center>
-		<h1>User Management</h1>
+
+
+<div id="tout">
+<div id="head">
+<center>
+		<h1 class="card">User Management</h1>
         <h2>
-        	<a href="new">Add New User</a>
+        	<a class="btn btn-success" href="new">Add New User</a>
         	&nbsp;&nbsp;&nbsp;
-        	<a href="list">List All Users</a>
+        	<a class="btn btn-primary" href="list-user?page=1">List All Users</a>
 
         </h2>
 	</center>
-    <div align="center">
-		<c:if test="${user != null}">
-			<form action="update" method="post">
-        </c:if>
-        <c:if test="${user == null}">
-			<form action="insert" method="post">
-        </c:if>
-        <table border="1" cellpadding="5">
-            <caption>
-            	<h2>
-            		<c:if test="${user != null}">
-            			Edit User
-            		</c:if>
-            		<c:if test="${user == null}">
-            			Add New User
-            		</c:if>
-            	</h2>
-            </caption>
-        		<c:if test="${user != null}">
-        			<input type="hidden" name="id" value="<c:out value='${user.id}' />" />
-        		</c:if>
-            <tr>
-                <th>User Name: </th>
-                <td>
-                	<input type="text" name="name" size="45"
-                			value="<c:out value='${user.name}' />"
-                		/>
-                </td>
-            </tr>
-            <tr>
-                <th>User Email: </th>
-                <td>
-                	<input type="text" name="email" size="45"
-                			value="<c:out value='${user.email}' />"
-                	/>
-                </td>
-            </tr>
-            <tr>
-                <th>Country: </th>
-                <td>
-                	<input type="text" name="country" size="15"
-                			value="<c:out value='${user.country}' />"
-                	/>
-                </td>
-            </tr>
-            <tr>
-            	<td colspan="2" align="center">
-            		<input type="submit" value="Save" />
-            	</td>
-            </tr>
-        </table>
-        </form>
-    </div>
+</div>
+
+<div id="largeur" class="container">
+    <form method="post" action="/update">
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-8">
+                <input type="text" id="name" name="name" required class="form-control" placeholder="name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="department" class="col-sm-2 col-form-label">Department</label>
+            <div class="col-sm-8">
+                <input type="text" id="department" required name="department" class="form-control" placeholder="department">
+            </div>
+        </div>
+        <div class="form-group row">
+            <center>
+                <div class="col-sm-8">
+                    <input type="submit" class="btn btn-primary" VALUE="Save">
+                </div>
+            </center>
+        </div>
+    </form>
+</div>
+</div>
 </body>
 </html>
