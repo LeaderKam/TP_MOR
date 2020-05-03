@@ -1,7 +1,12 @@
 package servlet.web;
+import fr.istic.sir.rest.SampleWebService;
+import servlet.dao.DepartmentDao;
+import servlet.dao.ReunionDao;
+import servlet.dao.SondageDao;
 import servlet.dao.UserDao;
 import test.testjpa.domain.Department;
 import test.testjpa.domain.Employee;
+import test.testjpa.domain.Sondage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,9 +30,16 @@ import javax.servlet.http.HttpServletResponse;
 public class UserServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private UserDao userDao;
+    private String name;
+    private SondageDao sondageDao;
+    private DepartmentDao departmentDao;
+    private ReunionDao reunionDao;
 
     public void init() {
         userDao = new UserDao();
+        sondageDao=new SondageDao();
+        departmentDao= new DepartmentDao();
+        reunionDao= new ReunionDao();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,12 +62,55 @@ public class UserServlet extends HttpServlet {
                 showEditForm(request, response);
             } else if ("/update".equals(action)) {
                 updateUser(request, response);
-            }  else {
+            }else if ("/list-user".equals(action)){
                 listUser(request, response);
+            }else if("/success".equals(action)){
+                success(request, response);
+            }else if("/sondage".equals(action)) {
+                sondage(request, response);
+            }else if("/reunion".equals(action)){
+                reunion(request, response);
+            }else if("/my".equals(action)){
+                my(request, response);
+            }
+            else {
+                home(request,response);
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void my(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("myform.html");
+        dispatcher.forward(request, response);
+    }
+
+    private void reunion(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("reunion.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void sondage(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, IOException, ServletException {
+        List<Sondage> listSondage = sondageDao.getAllSondage();
+        request.setAttribute("listSondage", listSondage);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
+        dispatcher.forward(request, response);
+           // RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
+          //  dispatcher.forward(request, response);
+    }
+
+    private void success(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("success.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void home(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void listUser(HttpServletRequest request, HttpServletResponse response)
@@ -65,6 +120,12 @@ public class UserServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
         dispatcher.forward(request, response);
     }
+
+    private void listSondage(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+
+    }
+
   private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
@@ -96,10 +157,9 @@ public class UserServlet extends HttpServlet {
             throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String country = request.getParameter("country");
+        String departmenta = request.getParameter("department");
 
-        Department department=new Department("REACT");
+        Department department=new Department(departmenta);
         Employee user = new Employee(name, department);
         userDao.updateUser(user);
         response.sendRedirect("list");
@@ -113,4 +173,5 @@ public class UserServlet extends HttpServlet {
         userDao.deleteUser(user);
         response.sendRedirect("list");
     }
+
 }

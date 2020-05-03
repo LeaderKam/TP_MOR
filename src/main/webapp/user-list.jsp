@@ -12,17 +12,16 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
                 integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
                 crossorigin="anonymous"></script>
+<style>
+.top{
+    margin: 10vh 0vh 0vh 0vh;
+}
+</style>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light justify-content-between">
-  <a class="navbar-brand">Navbar</a>
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav>
-	<center>
-		<h1 class="card">User Management</h1>
+<jsp:include page="header.jsp"/>
+	<center class="top">
+		<h1 >User Management</h1>
         <h2>
         	<a class="btn btn-outline-success" href="new">Add New User</a>
         	&nbsp;&nbsp;&nbsp;
@@ -95,5 +94,13 @@
             </ul>
           </nav>
     </div>
+     <!-- Bootstrap core JS-->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+            <!-- Third party plugin JS-->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+            <!-- Core theme JS-->
+            <script src="js/scripts.js"></script>
 </body>
 </html>

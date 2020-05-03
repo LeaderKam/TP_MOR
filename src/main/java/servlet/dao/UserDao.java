@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import servlet.config.HibernateUtil;
 import test.testjpa.domain.Employee;
+import test.testjpa.domain.Sondage;
 import test.testjpa.domain.User_sondage;
 
 import javax.persistence.EntityManager;
@@ -166,4 +167,6 @@ public class UserDao {
         test.getManager().close();
         return listOfUser;
     }
+
+
 }
