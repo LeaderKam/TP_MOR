@@ -1,5 +1,5 @@
 package servlet.web;
-import fr.istic.sir.rest.SampleWebService;
+
 import servlet.dao.DepartmentDao;
 import servlet.dao.ReunionDao;
 import servlet.dao.SondageDao;
@@ -10,6 +10,7 @@ import test.testjpa.domain.Sondage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -23,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
  * ControllerServlet.java
  * This servlet acts as a page controller for the application, handling all
  * requests from the user.
- * @email Ramesh Fadatare
  */
 
 @WebServlet("/")
@@ -37,9 +37,9 @@ public class UserServlet extends HttpServlet {
 
     public void init() {
         userDao = new UserDao();
-        sondageDao=new SondageDao();
-        departmentDao= new DepartmentDao();
-        reunionDao= new ReunionDao();
+        sondageDao = new SondageDao();
+        departmentDao = new DepartmentDao();
+        reunionDao = new ReunionDao();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -62,23 +62,64 @@ public class UserServlet extends HttpServlet {
                 showEditForm(request, response);
             } else if ("/update".equals(action)) {
                 updateUser(request, response);
-            }else if ("/list-user".equals(action)){
+            } else if ("/list-user".equals(action)) {
                 listUser(request, response);
-            }else if("/success".equals(action)){
+            } else if ("/success".equals(action)) {
                 success(request, response);
-            }else if("/sondage".equals(action)) {
-                sondage(request, response);
-            }else if("/reunion".equals(action)){
-                reunion(request, response);
-            }else if("/my".equals(action)){
-                my(request, response);
+            } else if ("/creerSondage".equals(action)) {
+                insertSondage(request, response);
+            }else if ("/editSondage".equals(action)) {
+                showEditForm(request, response);
+            }else if ("/updateSondage".equals(action)) {
+                updateSondage(request, response);
             }
-            else {
-                home(request,response);
+            else if("/sondage".equals(action)) {
+              sondage(request, response);
+            } else if("/deleteSondage".equals(action)) {
+              deleteSondage(request, response);
+            }
+            else if ("/reunion".equals(action)) {
+                reunion(request, response);
+            } else if ("/my".equals(action)) {
+                my(request, response);
+            } else {
+                home(request, response);
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
+    }
+
+    private void sondage(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        List<Sondage> listSondage = sondageDao.getAllSondage();
+        List<Employee> listUser = userDao.getAllUser();
+        System.out.println(listSondage.size());
+        request.setAttribute("listSondage", listSondage);
+        request.setAttribute("listUser", listUser);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
+        dispatcher.forward(request, response);
+        // RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
+        //  dispatcher.forward(request, response);
+    }
+
+    private void insertSondage(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        String nomSondage = request.getParameter("nomSondage");
+        String dateSondage = request.getParameter("dateSondage");
+
+        // String testDate = "29-Apr-2010,13:00:14 PM";
+        //DateFormat formatter = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
+        //Date date = formatter.parse(testDate);
+        //System.out.println(date);
+        System.out.println("********************\n" + dateSondage);
+        Long idEmployee = Long.parseLong(request.getParameter("idEmployee"));
+        Employee user = userDao.getUser(idEmployee);
+
+        Sondage newSondage = new Sondage(nomSondage, new Date(), user);
+
+        sondageDao.saveSondage(newSondage);
+        response.sendRedirect("/sondage");
     }
 
     private void my(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
@@ -91,15 +132,15 @@ public class UserServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void sondage(HttpServletRequest request, HttpServletResponse response)
-        throws SQLException, IOException, ServletException {
-        List<Sondage> listSondage = sondageDao.getAllSondage();
-        request.setAttribute("listSondage", listSondage);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
-        dispatcher.forward(request, response);
-           // RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
-          //  dispatcher.forward(request, response);
-    }
+    //  private void sondage(HttpServletRequest request, HttpServletResponse response)
+    //    throws SQLException, IOException, ServletException {
+    //  List<Sondage> listSondage = sondageDao.getAllSondage();
+    //request.setAttribute("listSondage", listSondage);
+    //RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
+    //dispatcher.forward(request, response);
+    // RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
+    //  dispatcher.forward(request, response);
+    //}
 
     private void success(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
@@ -126,7 +167,7 @@ public class UserServlet extends HttpServlet {
 
     }
 
-  private void showNewForm(HttpServletRequest request, HttpServletResponse response)
+    private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
         dispatcher.forward(request, response);
@@ -135,7 +176,7 @@ public class UserServlet extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
 
-      int id=0;  //int id = Integer.parseInt(request.getParameter("id"));
+        long id = 0;  //int id = Integer.parseInt(request.getParameter("id"));
         Employee existingUser = userDao.getUser(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
         request.setAttribute("user", existingUser);
@@ -147,7 +188,7 @@ public class UserServlet extends HttpServlet {
             throws SQLException, IOException {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
-        Department department=new Department("REACT");
+        Department department = new Department("REACT");
         Employee newUser = new Employee(name, department);
         userDao.saveUser(newUser);
         response.sendRedirect("list");
@@ -159,7 +200,7 @@ public class UserServlet extends HttpServlet {
         String name = request.getParameter("name");
         String departmenta = request.getParameter("department");
 
-        Department department=new Department(departmenta);
+        Department department = new Department(departmenta);
         Employee user = new Employee(name, department);
         userDao.updateUser(user);
         response.sendRedirect("list");
@@ -167,11 +208,34 @@ public class UserServlet extends HttpServlet {
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Department departement=new Department("fhkj");
-        Employee user=new Employee("gkj",departement);
-        userDao.deleteUser(user);
+        long id = Integer.parseInt(request.getParameter("id"));
+        Department departement = new Department("fhkj");
+        Employee user = new Employee("gkj", departement);
+        userDao.deleteUser(id);
         response.sendRedirect("list");
+    }
+    private void updateSondage(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        System.out.println(request.getParameter("idSondage"));
+        Long id = Long.parseLong(request.getParameter("idSondage"));
+        String name = request.getParameter("nomSondage");
+        String idEmployee = request.getParameter("idEmployee");
+
+        Employee user = userDao.getUser(Long.parseLong(idEmployee));
+        Sondage sondage=sondageDao.getSondage(id);
+        sondage.setEmployee(user);
+        sondage.setIntitule_son(name);
+        sondageDao.updateSondage(sondage);
+        response.sendRedirect("sondage");
+    }
+
+    private void deleteSondage(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        long id = Integer.parseInt(request.getParameter("id"));
+        Department departement = new Department("fhkj");
+        Employee user = new Employee("gkj", departement);
+        userDao.deleteUser(id);
+        response.sendRedirect("sondage");
     }
 
 }

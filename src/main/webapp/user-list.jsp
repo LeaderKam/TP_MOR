@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
   <%@page import="test.testjpa.domain.*"%>
   <%@page import="java.util.ArrayList"%>
     <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -46,6 +47,7 @@
               String spageid=request.getParameter("page");
               int pageid=Integer.parseInt(spageid);
               int total=(int)(std.size()/1000);
+              //System.out.println(std.get(0));
               int end=0;
               if(pageid==1){end=total;}
              else{

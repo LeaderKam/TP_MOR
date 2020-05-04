@@ -1,36 +1,34 @@
 package servlet.dao;
 
-import servlet.config.HibernateUtil;
 import servlet.config.HibernateUtilEntityManager;
-import test.testjpa.domain.Employee;
-import test.testjpa.domain.Reunion;
-import test.testjpa.domain.Reunion;
+import test.testjpa.domain.Sondage;
 
 import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReunionDao {
+public class UserSondageDao {
 
 
     HibernateUtilEntityManager test = new HibernateUtilEntityManager();
     EntityTransaction tx = test.getManager().getTransaction();
 
     /**
-     * Get all Reunions
+     * Get all Sondages
      *
      * @return
      */
     //@SuppressWarnings("unchecked")
-    public List<Reunion> getAllReunion() {
+    public List<Sondage> getAllSondage() {
 
-        List<Reunion> listOfReunion = new ArrayList<Reunion>();
+        List<Sondage> listOfSondage = new ArrayList<Sondage>();
 
         try {
             // start a transaction
             tx.begin();
-            // return the list of reunion object
-            listOfReunion = test.getManager().createQuery("select a From Reunion a", Reunion.class).getResultList();
+            // return the list of sondage object
+
+            listOfSondage = test.getManager().createQuery("select a From Sondage a", Sondage.class).getResultList();
             // commit transaction
             tx.commit();                       //transaction.commit();
         } catch (Exception e) {
@@ -40,23 +38,23 @@ public class ReunionDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return listOfReunion;
+        return listOfSondage;
     }
 
     /**
-     * Save Reunion
+     * Save Sondage
      *
-     * @param reunion
+     * @param sondage
      */
 
 
-    public void saveReunion(Reunion reunion) {
+    public void saveSondage(Sondage sondage) {
 
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            test.getManager().persist(reunion);
+            test.getManager().persist(sondage);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -69,18 +67,18 @@ public class ReunionDao {
     }
 
     /**
-     * Update Reunion
+     * Update Sondage
      *
-     * @param reunion
+     * @param sondage
      */
-    public void updateReunion(Reunion reunion) {
+    public void updateSondage(Sondage sondage) {
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            boolean t=test.getManager().contains(reunion);
+            boolean t=test.getManager().contains(sondage);
             if (t){
-                test.getManager().merge(reunion);
+                test.getManager().merge(sondage);
                 // commit transaction
                 tx.commit();
             }
@@ -95,17 +93,17 @@ public class ReunionDao {
     }
 
     /**
-     * Delete Reunion
+     * Delete Sondage
      *
      * @param id
      */
-    public void deleteReunion(Long id) {
+    public void deleteSondage(Long id) {
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            Reunion reunion = test.getManager().find(Reunion.class, id);
-            test.getManager().remove(reunion);
+            Sondage sondage = test.getManager().find(Sondage.class, id);
+            test.getManager().remove(sondage);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -118,18 +116,18 @@ public class ReunionDao {
     }
 
     /**
-     * Get Reunion By ID
+     * Get Sondage By ID
      *
      * @param id
      * @return
      */
-    public Reunion getReunion(Long id) {
-        Reunion reunion = null;
+    public Sondage getSondage(Long id) {
+        Sondage sondage = null;
         try {
             // start a transaction
             tx.begin();
-            // save the reunion object
-            reunion = test.getManager().find(Reunion.class, id);
+            // save the sondage object
+            sondage = test.getManager().find(Sondage.class, id);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -139,6 +137,6 @@ public class ReunionDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return reunion;
+        return sondage;
     }
 }

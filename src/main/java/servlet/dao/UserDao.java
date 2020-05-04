@@ -1,15 +1,10 @@
 package servlet.dao;
 
 
-import jpa.JpaTest;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import servlet.config.HibernateUtil;
+import servlet.config.HibernateUtilEntityManager;
 import test.testjpa.domain.Employee;
-import test.testjpa.domain.Sondage;
-import test.testjpa.domain.User_sondage;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,27 +16,22 @@ import java.util.List;
  */
 public class UserDao {
 
+
     /**
      * Save User
      *
      * @param user
      */
-
-
     public void saveUser(Employee user) {
-       // Transaction transaction = null;
-        HibernateUtil test = new HibernateUtil();
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-
         try {
-            //Session session = HibernateUtil.getSessionFactory().openSession();
-
             // start a transaction
-            tx.begin();             //transaction = session.beginTransaction();
+            tx.begin();
             // save the student object
-              test.getManager().persist(user);                      //session.save(user);
+            test.getManager().persist(user);
             // commit transaction
-             tx.commit();                       //transaction.commit();
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
@@ -57,18 +47,15 @@ public class UserDao {
      * @param user
      */
     public void updateUser(Employee user) {
-        HibernateUtil test = new HibernateUtil();
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-
         try {
-            //Session session = HibernateUtil.getSessionFactory().openSession();
-
             // start a transaction
-            tx.begin();             //transaction = session.beginTransaction();
+            tx.begin();
             // save the student object
-            test.getManager().merge(user);                      //session.save(user);
+            test.getManager().merge(user);
             // commit transaction
-            tx.commit();                       //transaction.commit();
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
@@ -81,23 +68,19 @@ public class UserDao {
     /**
      * Delete User
      *
-     * @param user
+     * @param id
      */
-    public void deleteUser(Employee user) {
-
-        HibernateUtil test = new HibernateUtil();
+    public void deleteUser(Long id) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-
         try {
-            //Session session = HibernateUtil.getSessionFactory().openSession();
-
             // start a transaction
-            tx.begin();             //transaction = session.beginTransaction();
+            tx.begin();
             // save the student object
-            user=test.getManager().merge(user);
-            test.getManager().remove(user);                      //session.save(user);
+            Employee user = test.getManager().find(Employee.class, id);
+            test.getManager().remove(user);
             // commit transaction
-            tx.commit();                       //transaction.commit();
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
@@ -113,21 +96,18 @@ public class UserDao {
      * @param id
      * @return
      */
-    public Employee getUser(int id) {
-
-        HibernateUtil test = new HibernateUtil();
+    public Employee getUser(Long id) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-
         Employee user = null;
         try {
-            //Session session = HibernateUtil.getSessionFactory().openSession();
-
             // start a transaction
-            tx.begin();             //transaction = session.beginTransaction();
+            tx.begin();
             // save the student object
-            user = test.getManager().createQuery("select a From Employee a", Employee.class).getSingleResult();
+            test.getManager().find(Employee.class, id);
+            user = test.getManager().find(Employee.class, id);
             // commit transaction
-            tx.commit();                       //transaction.commit();
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
@@ -145,19 +125,16 @@ public class UserDao {
      */
     //@SuppressWarnings("unchecked")
     public List<Employee> getAllUser() {
-        HibernateUtil test = new HibernateUtil();
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-        List<Employee> listOfUser=new ArrayList<Employee>();
-
+        List<Employee> listOfUser = new ArrayList<Employee>();
         try {
-            //Session session = HibernateUtil.getSessionFactory().openSession();
-
             // start a transaction
-            tx.begin();             //transaction = session.beginTransaction();
+            tx.begin();
             // return the list of student object
-            listOfUser = test.getManager().createQuery("select a From Employee a",Employee.class).getResultList();
+            listOfUser = test.getManager().createQuery("select a From Employee a", Employee.class).getResultList();
             // commit transaction
-            tx.commit();                       //transaction.commit();
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
@@ -167,6 +144,5 @@ public class UserDao {
         test.getManager().close();
         return listOfUser;
     }
-
 
 }

@@ -1,36 +1,34 @@
 package servlet.dao;
 
-import servlet.config.HibernateUtil;
 import servlet.config.HibernateUtilEntityManager;
-import test.testjpa.domain.Employee;
-import test.testjpa.domain.Reunion;
-import test.testjpa.domain.Reunion;
+import test.testjpa.domain.User_reunion;
 
 import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReunionDao {
+public class UserReunionDao {
 
 
     HibernateUtilEntityManager test = new HibernateUtilEntityManager();
     EntityTransaction tx = test.getManager().getTransaction();
 
     /**
-     * Get all Reunions
+     * Get all UserReunions
      *
      * @return
      */
     //@SuppressWarnings("unchecked")
-    public List<Reunion> getAllReunion() {
+    public List<User_reunion> getAllUserReunion() {
 
-        List<Reunion> listOfReunion = new ArrayList<Reunion>();
+        List<User_reunion> listOfUserReunion = new ArrayList<User_reunion>();
 
         try {
             // start a transaction
             tx.begin();
-            // return the list of reunion object
-            listOfReunion = test.getManager().createQuery("select a From Reunion a", Reunion.class).getResultList();
+            // return the list of userReunion object
+
+            listOfUserReunion = test.getManager().createQuery("select a From User_reunion a", User_reunion.class).getResultList();
             // commit transaction
             tx.commit();                       //transaction.commit();
         } catch (Exception e) {
@@ -40,23 +38,23 @@ public class ReunionDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return listOfReunion;
+        return listOfUserReunion;
     }
 
     /**
-     * Save Reunion
+     * Save UserReunion
      *
-     * @param reunion
+     * @param userReunion
      */
 
 
-    public void saveReunion(Reunion reunion) {
+    public void saveUserReunion(User_reunion userReunion) {
 
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            test.getManager().persist(reunion);
+            test.getManager().persist(userReunion);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -69,18 +67,18 @@ public class ReunionDao {
     }
 
     /**
-     * Update Reunion
+     * Update UserReunion
      *
-     * @param reunion
+     * @param userReunion
      */
-    public void updateReunion(Reunion reunion) {
+    public void updateUserReunion(User_reunion userReunion) {
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            boolean t=test.getManager().contains(reunion);
+            boolean t=test.getManager().contains(userReunion);
             if (t){
-                test.getManager().merge(reunion);
+                test.getManager().merge(userReunion);
                 // commit transaction
                 tx.commit();
             }
@@ -95,17 +93,17 @@ public class ReunionDao {
     }
 
     /**
-     * Delete Reunion
+     * Delete UserReunion
      *
      * @param id
      */
-    public void deleteReunion(Long id) {
+    public void deleteUserReunion(Long id) {
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            Reunion reunion = test.getManager().find(Reunion.class, id);
-            test.getManager().remove(reunion);
+            User_reunion userReunion = test.getManager().find(User_reunion.class, id);
+            test.getManager().remove(userReunion);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -118,18 +116,18 @@ public class ReunionDao {
     }
 
     /**
-     * Get Reunion By ID
+     * Get UserReunion By ID
      *
      * @param id
      * @return
      */
-    public Reunion getReunion(Long id) {
-        Reunion reunion = null;
+    public User_reunion getUserReunion(Long id) {
+        User_reunion userReunion = null;
         try {
             // start a transaction
             tx.begin();
-            // save the reunion object
-            reunion = test.getManager().find(Reunion.class, id);
+            // save the userReunion object
+            userReunion = test.getManager().find(User_reunion.class, id);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -139,6 +137,6 @@ public class ReunionDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return reunion;
+        return userReunion;
     }
 }

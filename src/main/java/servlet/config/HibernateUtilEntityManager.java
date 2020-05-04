@@ -1,8 +1,5 @@
 package servlet.config;
 
-import java.util.Properties;
-
-import jpa.JpaTest;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -12,25 +9,18 @@ import test.testjpa.domain.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import java.util.Properties;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.Environment;
-import org.hibernate.service.ServiceRegistry;
 
 /**
  * Java based configuration
  *
- * @author sie vincent kam
+ * @author ramesh Fadatare
  */
-
-public class HibernateUtil {
-    private static SessionFactory sessionFactory;
+public class HibernateUtilEntityManager {
+   private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -71,4 +61,24 @@ public class HibernateUtil {
         }
         return sessionFactory;
     }
+
+    private final EntityManager manager;
+
+    public HibernateUtilEntityManager(){
+        EntityManagerFactory factory =
+                Persistence.createEntityManagerFactory("mysql");
+        //EntityManager manager = EntityManagerHelper.getEntityManager();
+        EntityManager manager = factory.createEntityManager();
+        this.manager=manager;
+    }
+
+    public HibernateUtilEntityManager(EntityManager manager) {
+        this.manager = manager;
+    }
+
+    public EntityManager getManager() {
+        return this.manager;
+    }
+
+
 }

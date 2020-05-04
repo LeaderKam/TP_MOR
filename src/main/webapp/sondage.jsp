@@ -1,5 +1,6 @@
 <%@ page import="test.testjpa.domain.Sondage" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="test.testjpa.domain.Employee" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -15,7 +16,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-
 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -51,7 +51,7 @@
         #head {
             margin-top: 0px;
             height: 400px;
-            background: linear-gradient(darkblue,white);
+            background: linear-gradient(darkblue, white);
             position: relative;
         }
 
@@ -102,26 +102,37 @@
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         <div class="container">
-                            <form method="post" action="/sondage/participer">
+                            <form method="post" action="creerSondage">
                                 <div class="form-group row">
                                     <label for="name" class="col-sm-4 col-form-label">Nom sondage</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="name" name="nomSondage" required class="form-control"
-                                               placeholder="nom sondage">
+                                               placeholder="nom sondage" value="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="dateSondage" class="col-sm-4 col-form-label">Date création de sondage</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" id="dateSondage" name="dateSondage" required class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="nomEmploye" class="col-sm-4 col-form-label">Nom employe</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="nomEmploye" required name="nomEmploye"
-                                               class="form-control"
-                                               placeholder="nom employe">
+                                        <select name="idEmployee" class="form-control inputstl" id="nomEmploye">
+                                            <% ArrayList<Employee> emp = (ArrayList<Employee>) request.getAttribute("listUser");
+                                                for (int i = 0; i < 5; i++) {%>
+                                                    <option value="<%=emp.get(i).getId()%>"><%=emp.get(i).getName()%></option>
+
+                                            <%}%>
+
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <center>
                                         <div class="col-sm-8">
-                                            <input type="submit" class="btn btn-primary" VALUE="Save">
+                                            <input type="submit" class="btn btn-primary" VALUE="CREER SONDAGE">
                                         </div>
                                     </center>
                                 </div>
@@ -143,7 +154,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
                         <div class="container">
-                            <form method="post" action="/update">
+                            <form method="post" action="/participerSondage">
                                 <div class="form-group row">
                                     <label for="namee" class="col-sm-4 col-form-label">Nom sondage</label>
                                     <div class="col-sm-8">
@@ -200,7 +211,6 @@
                                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">RECHERCHER
                                     </button>
                                 </div>
-
                                 <table class="table table-striped" width="500px;" align="center">
                                     <thead class="table-dark">
                                     <tr>
@@ -210,7 +220,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     <%-- Fetching the attributes of the request object which was previously set by the servlet "StudentServlet.java" --%>
                                         <%ArrayList<Sondage> std =(ArrayList<Sondage>)request.getAttribute("listSondage");
               String spageid=request.getParameter("page");
@@ -226,7 +235,7 @@
                   end=pageid+total;
               }}
              // for(int i=pageid;i<end;i++){
-              for(int i=0;i<5;i++){%>
+              for(int i=0;i<2;i++){%>
                                     <%-- Arranging data in tabular form--%>
                                     <tr>
                                         <th scope="row"><%=std.get(i).getIntitule_son()%>
@@ -234,15 +243,15 @@
                                         <td><%=std.get(i).getDate_sondage()%>
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary" href="edit?id=<%=std.get(i).getSondage_id()%>">Edit</a>
+                                            <a class="btn btn-primary" href="editSondage?id=<%=std.get(i).getSondage_id()%>">Edit</a>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-danger " href="delete?id=<%=std.get(i).getSondage_id()%>">Delete</a>
+                                            <a class="btn btn-danger " href="deleteSondage?id=<%=std.get(i).getSondage_id()%>">Delete</a>
                                         </td>
                                     </tr>
                                         <%}%>
 
-                                </table>
 
+                                </table>
 
                             </form>
                         </div>
@@ -262,22 +271,23 @@
             </thead>
             <tbody>
 
+
             <%-- Fetching the attributes of the request object which was previously set by the servlet "StudentServlet.java" --%>
                 <%ArrayList<Sondage> stdd =(ArrayList<Sondage>)request.getAttribute("listSondage");
-              String spageidd=request.getParameter("page");
-              if(spageid!=null){
-                  System.out.println("***********************\n"+spageid+"**********************\n");
-                  int pageid=Integer.parseInt(spageid);
-                  int total=(int)(std.size()/10);
-                  int end=0;
-              if(pageid==1){end=total;}
-              else{
-                  pageid=pageid-1;
-                  pageid=pageid*total;
-                  end=pageid+total;
-              }}
-             // for(int i=pageid;i<end;i++){
-              for(int i=0;i<5;i++){%>
+            String spageidd=request.getParameter("page");
+            if(spageid!=null){
+            System.out.println("***********************\n"+spageid+"**********************\n");
+            int pageid=Integer.parseInt(spageid);
+            int total=(int)(std.size()/10);
+            int end=0;
+            if(pageid==1){end=total;}
+            else{
+            pageid=pageid-1;
+            pageid=pageid*total;
+            end=pageid+total;
+            }}
+            // for(int i=pageid;i<end;i++){
+            for(int i=0;i<2;i++){%>
             <%-- Arranging data in tabular form--%>
             <tr>
                 <th scope="row"><%=std.get(i).getIntitule_son()%>
@@ -285,13 +295,13 @@
                 <td><%=std.get(i).getDate_sondage()%>
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="edit?id=<%=std.get(i).getSondage_id()%>">Edit</a>
+                    <a class="btn btn-primary" href="editSondage?id=<%=std.get(i).getSondage_id()%>">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a class="btn btn-danger " href="delete?id=<%=std.get(i).getSondage_id()%>">Delete</a>
+                    <a class="btn btn-danger " href="deleteSondage?id=<%=std.get(i).getSondage_id()%>">Delete</a>
                 </td>
             </tr>
-                <%}%>
-
+                <%}
+            %>
         </table>
     </div>
 </div>
