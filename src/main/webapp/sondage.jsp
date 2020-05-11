@@ -113,7 +113,7 @@
                                 <div class="form-group row">
                                     <label for="dateSondage" class="col-sm-4 col-form-label">Date création de sondage</label>
                                     <div class="col-sm-8">
-                                        <input type="date" id="dateSondage" name="dateSondage" required class="form-control">
+                                        <input type="date" id="dateSondage" name="dateSondage"  class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -302,7 +302,7 @@
             end=pageid+total;
             }}
             // for(int i=pageid;i<end;i++){
-            for(int i=0;i<2;i++){%>
+            for(int i=0;i<std.size();i++){%>
             <%-- Arranging data in tabular form--%>
             <tr>
                 <th scope="row"><%=std.get(i).getIntitule_son()%>

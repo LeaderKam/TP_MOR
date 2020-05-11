@@ -80,7 +80,7 @@ public class SondageDao {
             tx.begin();
             // save the student object
             boolean t = test.getManager().contains(sondage);
-            if (t) {
+            if (!t) {
                 test.getManager().merge(sondage);
                 // commit transaction
                 tx.commit();
