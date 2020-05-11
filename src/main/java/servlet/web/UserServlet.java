@@ -35,7 +35,7 @@ public class UserServlet extends HttpServlet {
     private DepartmentDao departmentDao;
     private ReunionDao reunionDao;
 
-    public void init() {
+    public void init() throws ServletException{
         userDao = new UserDao();
         sondageDao = new SondageDao();
         departmentDao = new DepartmentDao();

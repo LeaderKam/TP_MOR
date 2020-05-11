@@ -155,21 +155,36 @@
                     <div class="card-body">
                         <div class="container">
                             <form method="post" action="/participerSondage">
+
                                 <div class="form-group row">
-                                    <label for="namee" class="col-sm-4 col-form-label">Nom sondage</label>
+                                    <label for="nomSondage" class="col-sm-4 col-form-label">Nom sondage</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="namee" name="nomSondage" required class="form-control"
-                                               placeholder="nom sondage">
+                                        <select name="nomSondage" class="form-control inputstl" id="nomSondage">
+                                            <% ArrayList<Sondage> sondages=(ArrayList<Sondage>) request.getAttribute("listSondage");
+                                                for (int i = 0; i < sondages.size(); i++) {%>
+                                            <option value="<%=sondages.get(i).getSondage_id()%>"><%=sondages.get(i).getIntitule_son()%></option>
+
+                                            <%}%>
+
+                                        </select>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label for="nomEmploye" class="col-sm-4 col-form-label">Nom employe</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="nomEmployee" required name="nomEmployee"
-                                               class="form-control"
-                                               placeholder="nom employe">
+                                        <select name="idEmployee" class="form-control inputstl" id="nomEmploye">
+                                            <%
+                                                for (int i = 0; i < emp.size(); i++) {%>
+                                            <option value="<%=emp.get(i).getId()%>"><%=emp.get(i).getName()%></option>
+
+                                            <%}%>
+
+                                        </select>
                                     </div>
                                 </div>
+
+
                                 <div class="form-group row">
                                     <label for="dateChoisi" class="col-sm-4 col-form-label">Choix de la date</label>
                                     <div class="col-sm-8">
@@ -264,7 +279,7 @@
         <table class="table table-striped" width="500px;" align="center">
             <thead class="table-dark">
             <tr>
-                <th scope="col"><b>Nom</b></th>
+                <th scope="col"><b>Nom</b></th>P
                 <th scope="col"><b>Date</b></th>
                 <th scope="col"><b>Actions</b></th>
             </tr>
