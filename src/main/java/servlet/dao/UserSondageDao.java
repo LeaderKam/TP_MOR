@@ -1,7 +1,7 @@
 package servlet.dao;
 
 import servlet.config.HibernateUtilEntityManager;
-import test.testjpa.domain.Sondage;
+import test.testjpa.domain.User_sondage;
 
 import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
@@ -9,26 +9,23 @@ import java.util.List;
 
 public class UserSondageDao {
 
-
-    HibernateUtilEntityManager test = new HibernateUtilEntityManager();
-    EntityTransaction tx = test.getManager().getTransaction();
-
     /**
-     * Get all Sondages
+     * Get all User_sondages
      *
      * @return
      */
     //@SuppressWarnings("unchecked")
-    public List<Sondage> getAllSondage() {
-
-        List<Sondage> listOfSondage = new ArrayList<Sondage>();
+    public List<User_sondage> getAllUserUser_sondage() {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
+        List<User_sondage> listOfUser_sondage = new ArrayList<User_sondage>();
 
         try {
             // start a transaction
             tx.begin();
-            // return the list of sondage object
+            // return the list of user_sondage object
 
-            listOfSondage = test.getManager().createQuery("select a From Sondage a", Sondage.class).getResultList();
+            listOfUser_sondage = test.getManager().createQuery("select a From User_sondage a", User_sondage.class).getResultList();
             // commit transaction
             tx.commit();                       //transaction.commit();
         } catch (Exception e) {
@@ -38,23 +35,24 @@ public class UserSondageDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return listOfSondage;
+        return listOfUser_sondage;
     }
 
     /**
-     * Save Sondage
+     * Save User_sondage
      *
-     * @param sondage
+     * @param user_sondage
      */
 
 
-    public void saveSondage(Sondage sondage) {
-
+    public void saveUserSondage(User_sondage user_sondage) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            test.getManager().persist(sondage);
+            test.getManager().persist(user_sondage);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -67,18 +65,20 @@ public class UserSondageDao {
     }
 
     /**
-     * Update Sondage
+     * Update User_sondage
      *
-     * @param sondage
+     * @param user_sondage
      */
-    public void updateSondage(Sondage sondage) {
+    public void updateUser_sondage(User_sondage user_sondage) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            boolean t=test.getManager().contains(sondage);
+            boolean t=test.getManager().contains(user_sondage);
             if (t){
-                test.getManager().merge(sondage);
+                test.getManager().merge(user_sondage);
                 // commit transaction
                 tx.commit();
             }
@@ -93,17 +93,19 @@ public class UserSondageDao {
     }
 
     /**
-     * Delete Sondage
+     * Delete User_sondage
      *
      * @param id
      */
-    public void deleteSondage(Long id) {
+    public void deleteUserSondage(Long id) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            Sondage sondage = test.getManager().find(Sondage.class, id);
-            test.getManager().remove(sondage);
+            User_sondage user_sondage = test.getManager().find(User_sondage.class, id);
+            test.getManager().remove(user_sondage);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -116,18 +118,20 @@ public class UserSondageDao {
     }
 
     /**
-     * Get Sondage By ID
+     * Get User_sondage By ID
      *
      * @param id
      * @return
      */
-    public Sondage getSondage(Long id) {
-        Sondage sondage = null;
+    public User_sondage getUserSondage(Long id) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
+        User_sondage user_sondage = null;
         try {
             // start a transaction
             tx.begin();
-            // save the sondage object
-            sondage = test.getManager().find(Sondage.class, id);
+            // save the user_sondage object
+            user_sondage = test.getManager().find(User_sondage.class, id);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -137,6 +141,6 @@ public class UserSondageDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return sondage;
+        return user_sondage;
     }
 }

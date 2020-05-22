@@ -7,33 +7,35 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Sondage_lieu_date extends User_sondage implements Serializable {
+public class Sondage_lieu_date extends Sondage implements Serializable {
 
-    private String sondage_lieu_date;
-    private Date sondage_date;
+    private LieuSondage lieuSondage;
+    private DateSondage dateSondage;
     public Sondage_lieu_date() {
         super();
     }
 
-    public Sondage_lieu_date(Employee employee, Sondage sondage, String sondage_lieu_date, Date sondage_date) {
-        super(employee, sondage);
-        this.sondage_lieu_date = sondage_lieu_date;
-        this.sondage_date = sondage_date;
+    public Sondage_lieu_date(String intitule_son, Date date, Employee employee, LieuSondage lieuSondage, DateSondage dateSondage) {
+        super(intitule_son, date, employee);
+        this.lieuSondage = lieuSondage;
+        this.dateSondage = dateSondage;
     }
 
-    public String getSondage_lieu_date() {
-        return sondage_lieu_date;
+    @OneToOne(cascade = CascadeType.ALL)
+    public LieuSondage getLieuSondage() {
+        return lieuSondage;
     }
 
-    public void setSondage_lieu_date(String sondage_lieu_date) {
-        this.sondage_lieu_date = sondage_lieu_date;
+    public void setLieuSondage(LieuSondage lieuSondage) {
+        this.lieuSondage = lieuSondage;
     }
 
-    public Date getSondage_date() {
-        return sondage_date;
+    @OneToOne(cascade = CascadeType.ALL)
+    public DateSondage getDateSondage() {
+        return dateSondage;
     }
 
-    public void setSondage_date(Date sondage_date) {
-        this.sondage_date = sondage_date;
+    public void setDateSondage(DateSondage dateSondage) {
+        this.dateSondage = dateSondage;
     }
 }

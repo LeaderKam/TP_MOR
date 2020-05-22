@@ -66,12 +66,12 @@ public class UserController implements IController {
 
     @Override
     public void home(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        List<Sondage> listSondage = sondageDao.getAllSondage();
-        List<Employee> listUser = userDao.getAllUser();
-        System.out.println(listSondage.size());
-        request.setAttribute("listSondage", listSondage);
-        request.setAttribute("listUser", listUser);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user.jsp");
-        dispatcher.forward(request, response);
+            List<Sondage> listSondage = sondageDao.getAllSondage();
+            List<Employee> listUser = userDao.getAllUser();
+            System.out.println(listSondage.size());
+            request.setAttribute("listSondage", listSondage);
+            request.setAttribute("listUser", listUser);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
+            dispatcher.forward(request, response);
     }
 }

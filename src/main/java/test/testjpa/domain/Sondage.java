@@ -7,7 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Sondage implements Serializable {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Sondage implements Serializable {
 
     private Long sondage_id;
     private String intitule_sondage;
@@ -68,4 +69,6 @@ public class Sondage implements Serializable {
     public void setUser_sondages(List<User_sondage> user_sondages) {
         this.user_sondages = user_sondages;
     }
+
+
 }

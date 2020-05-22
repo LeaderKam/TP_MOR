@@ -18,6 +18,7 @@ public abstract class User_sondage {
     public User_sondage(Employee employee, Sondage sondage) {
         this.employee = employee;
         this.sondage = sondage;
+
     }
 
     @Id

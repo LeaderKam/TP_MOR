@@ -1,34 +1,61 @@
 package servlet.dao;
 
 import servlet.config.HibernateUtilEntityManager;
-import test.testjpa.domain.User_reunion;
+import test.testjpa.domain.LieuSondage;
+import test.testjpa.domain.LieuSondage;
+import test.testjpa.domain.Sondage;
+import test.testjpa.domain.Sondage_lieu;
 
 import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserReunionDao {
-
-
+public class LieuDao {
 
     /**
-     * Get all UserReunions
+     * Get all LieuSondages
      *
      * @return
      */
     //@SuppressWarnings("unchecked")
-    public List<User_reunion> getAllUserReunion() {
-
+    public List<LieuSondage> getAllLieuSondage() {
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-        List<User_reunion> listOfUserReunion = new ArrayList<User_reunion>();
+        List<LieuSondage> listOfLieuSondage = new ArrayList<LieuSondage>();
 
         try {
             // start a transaction
             tx.begin();
-            // return the list of userReunion object
+            // return the list of sondage object
 
-            listOfUserReunion = test.getManager().createQuery("select a From User_reunion a", User_reunion.class).getResultList();
+            listOfLieuSondage = test.getManager().createQuery("select a From LieuSondage a", LieuSondage.class).getResultList();
+            // commit transaction
+            tx.commit();                       //transaction.commit();
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        }
+        test.getManager().close();
+        return listOfLieuSondage;
+    }
+
+    /**
+     * Save LieuSondage
+     *
+     * @param sondage
+     */
+
+
+    public void saveLieuSondage(LieuSondage sondage) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
+        try {
+            // start a transaction
+            tx.begin();
+            // save the student object
+            test.getManager().persist(sondage);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -38,52 +65,23 @@ public class UserReunionDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return listOfUserReunion;
     }
 
     /**
-     * Save UserReunion
+     * Update LieuSondage
      *
-     * @param userReunion
+     * @param sondage
      */
-
-
-    public void saveUserReunion(User_reunion userReunion) {
-
+    public void updateLieuSondage(LieuSondage sondage) {
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            test.getManager().persist(userReunion);
-            // commit transaction
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        }
-        test.getManager().close();
-    }
-
-    /**
-     * Update UserReunion
-     *
-     * @param userReunion
-     */
-    public void updateUserReunion(User_reunion userReunion) {
-
-        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
-        EntityTransaction tx = test.getManager().getTransaction();
-        try {
-            // start a transaction
-            tx.begin();
-            // save the student object
-            boolean t=test.getManager().contains(userReunion);
-            if (t){
-                test.getManager().merge(userReunion);
+            boolean t = test.getManager().contains(sondage);
+            if (!t) {
+                test.getManager().merge(sondage);
                 // commit transaction
                 tx.commit();
             }
@@ -98,19 +96,19 @@ public class UserReunionDao {
     }
 
     /**
-     * Delete UserReunion
+     * Delete LieuSondage
      *
      * @param id
      */
-    public void deleteUserReunion(Long id) {
+    public void deleteLieuSondage(Long id) {
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            User_reunion userReunion = test.getManager().find(User_reunion.class, id);
-            test.getManager().remove(userReunion);
+            LieuSondage sondage = test.getManager().find(LieuSondage.class, id);
+            test.getManager().remove(sondage);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -123,21 +121,20 @@ public class UserReunionDao {
     }
 
     /**
-     * Get UserReunion By ID
+     * Get LieuSondage By ID
      *
      * @param id
      * @return
      */
-    public User_reunion getUserReunion(Long id) {
-
+    public LieuSondage getLieuSondage(Long id) {
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-        User_reunion userReunion = null;
+        LieuSondage sondage = null;
         try {
             // start a transaction
             tx.begin();
-            // save the userReunion object
-            userReunion = test.getManager().find(User_reunion.class, id);
+            // save the sondage object
+            sondage = test.getManager().find(LieuSondage.class, id);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -147,6 +144,7 @@ public class UserReunionDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return userReunion;
+        return sondage;
     }
+
 }

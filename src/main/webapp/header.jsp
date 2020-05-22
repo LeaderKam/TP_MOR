@@ -1,7 +1,7 @@
 
 <style>
 #mainNav{
-
+background: #EFEFEF;
 }
 </style>
 <!-- Navigation-->

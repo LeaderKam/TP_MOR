@@ -42,9 +42,9 @@ public class SondageController implements IController {
         Long idEmployee = Long.parseLong(request.getParameter("idEmployee"));
         Employee user = userDao.getUser(idEmployee);
 
-        Sondage newSondage = new Sondage(nomSondage, new Date(), user);
+     //   Sondage newSondage = new Sondage(nomSondage, new Date(), user);
 
-        sondageDao.saveSondage(newSondage);
+       // this.sondageDao.saveSondage(newSondage);
         response.sendRedirect("/sondage");
     }
 
@@ -55,11 +55,11 @@ public class SondageController implements IController {
         String name = request.getParameter("nomSondage");
         String idEmployee = request.getParameter("idEmployee");
 
-        Employee user = userDao.getUser(Long.parseLong(idEmployee));
-        Sondage sondage=sondageDao.getSondage(id);
+        Employee user = this.userDao.getUser(Long.parseLong(idEmployee));
+        Sondage sondage=this.sondageDao.getSondage(id);
         sondage.setEmployee(user);
         sondage.setIntitule_son(name);
-        sondageDao.updateSondage(sondage);
+        this.sondageDao.updateSondage(sondage);
         response.sendRedirect("sondage");
     }
 
@@ -67,7 +67,7 @@ public class SondageController implements IController {
     public void showEditForm(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 
         long id = Integer.parseInt(request.getParameter("id"));
-        List<Employee> existingUser = userDao.getAllUser();
+        List<Employee> existingUser = this.userDao.getAllUser();
         request.setAttribute("user", existingUser);
         RequestDispatcher dispatcher = request.getRequestDispatcher("sondage-form.jsp");
 
@@ -79,18 +79,18 @@ public class SondageController implements IController {
         long id = Long.parseLong(request.getParameter("id"));
         // Department departement = new Department("fhkj");
         //Employee user = new Employee("gkj", departement);
-        sondageDao.deleteSondage(id);
+        this.sondageDao.deleteSondage(id);
         response.sendRedirect("sondage");
     }
 
     @Override
     public void home(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        List<Reunion> listReunion = reunionDao.getAllReunion();
-        List<Employee> listUser = userDao.getAllUser();
-        System.out.println(listReunion.size());
-        request.setAttribute("listReunion", listReunion);
+        List<Sondage> listSondage = this.sondageDao.getAllSondage();
+        List<Employee> listUser = this.userDao.getAllUser();
+        System.out.println(listSondage.size());
+        request.setAttribute("listSondage", listSondage);
         request.setAttribute("listUser", listUser);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("reunion.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("sondage.jsp");
         dispatcher.forward(request, response);
 
     }

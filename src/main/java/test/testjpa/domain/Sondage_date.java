@@ -7,24 +7,25 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Sondage_date extends User_sondage implements Serializable {
+public class Sondage_date extends Sondage implements Serializable {
 
-    private Date sondage_date;
+    private DateSondage dateSondage;
 
     public Sondage_date() {
         super();
     }
 
-    public Sondage_date(Employee employee, Sondage sondage, Date sondage_date) {
-        super(employee, sondage);
-        this.sondage_date = sondage_date;
+    public Sondage_date(String intitule_son, Date date, Employee employee, DateSondage dateSondage) {
+        super(intitule_son, date, employee);
+        this.dateSondage = dateSondage;
     }
 
-    public Date getSondage_date() {
-        return sondage_date;
+    @OneToOne
+    public DateSondage getDateSondage() {
+        return dateSondage;
     }
 
-    public void setSondage_date(Date sondage_date) {
-        this.sondage_date = sondage_date;
+    public void setDateSondage(DateSondage dateSondage) {
+        this.dateSondage = dateSondage;
     }
 }

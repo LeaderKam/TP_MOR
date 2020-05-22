@@ -29,6 +29,7 @@ public class SondageDao {
             // return the list of sondage object
 
             listOfSondage = test.getManager().createQuery("select a From Sondage a", Sondage.class).getResultList();
+            listOfSondage.get(0);
             // commit transaction
             tx.commit();                       //transaction.commit();
         } catch (Exception e) {

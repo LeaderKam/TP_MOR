@@ -7,24 +7,25 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Sondage_lieu extends User_sondage implements Serializable {
+public class Sondage_lieu extends Sondage implements Serializable {
 
-    private String sondage_lieu;
+    private LieuSondage lieuSondage;
 
     public Sondage_lieu() {
         super();
     }
 
-    public Sondage_lieu(Employee employee, Sondage sondage, String sondage_lieu) {
-        super(employee, sondage);
-        this.sondage_lieu = sondage_lieu;
+    public Sondage_lieu(String intitule_son, Date date, Employee employee, LieuSondage lieuSondage) {
+        super(intitule_son, date, employee);
+        this.lieuSondage = lieuSondage;
     }
 
-    public String getSondage_lieu() {
-        return sondage_lieu;
+    @OneToOne(cascade = CascadeType.ALL)
+    public LieuSondage getLieuSondage() {
+        return lieuSondage;
     }
 
-    public void setSondage_lieu(String sondage_lieu) {
-        this.sondage_lieu = sondage_lieu;
+    public void setLieuSondage(LieuSondage lieuSondage) {
+        this.lieuSondage = lieuSondage;
     }
 }
