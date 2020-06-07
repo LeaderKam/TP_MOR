@@ -11,6 +11,7 @@ public class Reunion {
     private String intitule_reunion;
     private String resume_reunion;
     private Date date_reunion;
+    private boolean pause_cafe;
     private List<User_reunion> user_reunions=new ArrayList<User_reunion>();
 
 
@@ -18,10 +19,11 @@ public class Reunion {
 
     }
 
-    public Reunion(String intitule_reunion,String resume, Date date_reunion) {
+    public Reunion(String intitule_reunion,String resume, Date date_reunion,boolean pause_cafe) {
         this.intitule_reunion = intitule_reunion;
         this.resume_reunion=resume;
         this.date_reunion = date_reunion;
+        this.pause_cafe=pause_cafe;
     }
 
     @Id
@@ -58,12 +60,20 @@ public class Reunion {
         this.date_reunion = date_reunion;
     }
 
-    @OneToMany(mappedBy = "reunion",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "reunion",cascade = CascadeType.ALL)
     public List<User_reunion> getUser_reunion() {
         return user_reunions;
     }
 
     public void setUser_reunion(List<User_reunion> user_reunions) {
         this.user_reunions = user_reunions;
+    }
+
+    public boolean isPause_cafe() {
+        return pause_cafe;
+    }
+
+    public void setPause_cafe(boolean pause_cafe) {
+        this.pause_cafe = pause_cafe;
     }
 }

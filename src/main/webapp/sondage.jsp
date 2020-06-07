@@ -225,15 +225,15 @@
                                         <select name="nomSondage" class="form-control " id="nomSondage">
                                             <% ArrayList<Sondage> sondages=(ArrayList<Sondage>) request.getAttribute("listSondage");
 
-
-                                                for (int i = 0; i < sondages.size(); i++) {
-                                                    if (sondages.get(i) instanceof Sondage_lieu){%>
-                                                        <option value="1;<%=sondages.get(i).getSondage_id()%>;<%=((Sondage_lieu) sondages.get(i)).getLieuSondage().getLieu1()%>;<%=((Sondage_lieu) sondages.get(i)).getLieuSondage().getLieu2()%>;<%=((Sondage_lieu) sondages.get(i)).getLieuSondage().getLieu3()%>"><%=sondages.get(i).getIntitule_son()%></option>
-                                                    <%}else if(sondages.get(i) instanceof Sondage_date){%>
-                                                        <option value="2;<%=sondages.get(i).getSondage_id()%>;<%=((Sondage_date) sondages.get(i)).getDateSondage().getDate1()%>;<%=((Sondage_date) sondages.get(i)).getDateSondage().getDate2()%>;<%=((Sondage_date) sondages.get(i)).getDateSondage().getDate3()%>"><%=sondages.get(i).getIntitule_son()%></option>
-                                                    <%}else if (sondages.get(i) instanceof Sondage_lieu_date){%>
-                                                         <option value="3;<%=sondages.get(i).getSondage_id()%>;<%=((Sondage_lieu_date) sondages.get(i)).getLieuSondage().getLieu1()%>;<%=((Sondage_lieu_date) sondages.get(i)).getLieuSondage().getLieu2()%>;<%=((Sondage_lieu_date) sondages.get(i)).getLieuSondage().getLieu3()%>;<%=((Sondage_lieu_date) sondages.get(i)).getDateSondage().getDate1()%>;<%=((Sondage_lieu_date) sondages.get(i)).getDateSondage().getDate2()%>;<%=((Sondage_lieu_date) sondages.get(i)).getDateSondage().getDate2()%>"><%=sondages.get(i).getIntitule_son()%></option>
-                                            <%}}%>
+                                                if(sondages.size()!=0){
+                                                    for (int i = 0; i < sondages.size(); i++) {
+                                                        if (sondages.get(i) instanceof Sondage_lieu){%>
+                                                            <option value="1;<%=sondages.get(i).getSondage_id()%>;<%=((Sondage_lieu) sondages.get(i)).getLieuSondage().getLieu1()%>;<%=((Sondage_lieu) sondages.get(i)).getLieuSondage().getLieu2()%>;<%=((Sondage_lieu) sondages.get(i)).getLieuSondage().getLieu3()%>"><%=sondages.get(i).getIntitule_son()%></option>
+                                                        <%}else if(sondages.get(i) instanceof Sondage_date){%>
+                                                            <option value="2;<%=sondages.get(i).getSondage_id()%>;<%=((Sondage_date) sondages.get(i)).getDateSondage().getDate1()%>;<%=((Sondage_date) sondages.get(i)).getDateSondage().getDate2()%>;<%=((Sondage_date) sondages.get(i)).getDateSondage().getDate3()%>"><%=sondages.get(i).getIntitule_son()%></option>
+                                                        <%}else if (sondages.get(i) instanceof Sondage_lieu_date){%>
+                                                             <option value="3;<%=sondages.get(i).getSondage_id()%>;<%=((Sondage_lieu_date) sondages.get(i)).getLieuSondage().getLieu1()%>;<%=((Sondage_lieu_date) sondages.get(i)).getLieuSondage().getLieu2()%>;<%=((Sondage_lieu_date) sondages.get(i)).getLieuSondage().getLieu3()%>;<%=((Sondage_lieu_date) sondages.get(i)).getDateSondage().getDate1()%>;<%=((Sondage_lieu_date) sondages.get(i)).getDateSondage().getDate2()%>;<%=((Sondage_lieu_date) sondages.get(i)).getDateSondage().getDate2()%>"><%=sondages.get(i).getIntitule_son()%></option>
+                                            <%}}}%>
 
                                         </select>
                                     </div>
@@ -387,7 +387,7 @@
         <table class="table table-striped" width="500px;" align="center">
             <thead class="table-dark">
             <tr>
-                <th scope="col"><b>Nom</b></th>P
+                <th scope="col"><b>Nom</b></th>
                 <th scope="col"><b>Date</b></th>
                 <th scope="col"><b>Actions</b></th>
             </tr>

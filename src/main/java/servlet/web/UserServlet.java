@@ -110,8 +110,11 @@ public class UserServlet extends HttpServlet {
             }
             else if("/deleteReunion".equals(action)) {
                 deleteReunion(request, response);
+            }else if("/participerReunion".equals(action)) {
+                participerReunion(request, response);
+            }else if("/participantReunion".equals(action)) {
+                participantReunion(request, response);
             }
-
 
             else {
                 home(request, response);
@@ -157,7 +160,7 @@ public class UserServlet extends HttpServlet {
     long id = Integer.parseInt(request.getParameter("id"));
     List<Employee> existingUser = userDao.getAllUser();
     request.setAttribute("user", existingUser);
-    RequestDispatcher dispatcher = request.getRequestDispatcher("sondage-form.jsp");
+    RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
 
     dispatcher.forward(request, response);
 
@@ -272,8 +275,12 @@ public class UserServlet extends HttpServlet {
             throws SQLException, ServletException, IOException {
 
         long id = Integer.parseInt(request.getParameter("id"));
-        List<Employee> existingUser = userDao.getAllUser();
-        request.setAttribute("user", existingUser);
+        Sondage sondage=sondageDao.getSondage(id);
+        List<Employee> employees = userDao.getAllUser();
+        List<Sondage> sondages = sondageDao.getAllSondage();
+        request.setAttribute("employees", employees);
+        request.setAttribute("sondage", sondage);
+        request.setAttribute("sondages", sondages);
         RequestDispatcher dispatcher = request.getRequestDispatcher("sondage-form.jsp");
 
         dispatcher.forward(request, response);
@@ -282,18 +289,72 @@ public class UserServlet extends HttpServlet {
 
 
     private void updateSondage(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        System.out.println(request.getParameter("idSondage"));
+            throws SQLException, IOException, ParseException {
         Long id = Long.parseLong(request.getParameter("idSondage"));
-        String name = request.getParameter("nomSondage");
+        String nomSondage = request.getParameter("nomSondage");
+        String dateDuSondage = request.getParameter("dateSondage");
         String idEmployee = request.getParameter("idEmployee");
 
+        String lieu1 = request.getParameter("lieu1");
+        String lieu2 = request.getParameter("lieu2");
+        String lieu3 = request.getParameter("lieu3");
+        String date1 = request.getParameter("date1");
+        String date2 = request.getParameter("date2");
+        String date3 = request.getParameter("date2");
+
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = formatter.parse(dateDuSondage);
+        Date dateChoix1 = formatter.parse(date1);
+        Date dateChoix2 = formatter.parse(date2);
+        Date dateChoix3 = formatter.parse(date3);
+
         Employee user = userDao.getUser(Long.parseLong(idEmployee));
+
         Sondage sondage=sondageDao.getSondage(id);
         sondage.setEmployee(user);
-        sondage.setIntitule_son(name);
-        sondageDao.updateSondage(sondage);
-        response.sendRedirect("sondage");
+        sondage.setIntitule_son(nomSondage);
+        sondage.setDate_sondage(date);
+
+        if (sondage instanceof Sondage_lieu){
+            String idLieuSondage = request.getParameter("idLieuSondage");
+            LieuSondage lieuSondage = lieuDao.getLieuSondage(Long.parseLong(idLieuSondage));
+            lieuSondage.setLieu1(lieu1);
+            lieuSondage.setLieu2(lieu2);
+            lieuSondage.setLieu3(lieu3);
+            lieuDao.updateLieuSondage(lieuSondage);
+            ((Sondage_lieu) sondage).setLieuSondage(lieuSondage);
+            sondageDao.updateSondage(sondage);
+            response.sendRedirect("/sondage");
+        }else if (sondage instanceof Sondage_date){
+            String idDateSondage = request.getParameter("idDateSondage");
+            DateSondage dateSondage = dateDao.getDateSondage(Long.parseLong(idDateSondage));
+            dateSondage.setDate1(dateChoix1);
+            dateSondage.setDate2(dateChoix2);
+            dateSondage.setDate3(dateChoix3);
+            dateDao.updateDateSondage(dateSondage);
+            ((Sondage_date) sondage).setDateSondage(dateSondage);
+            sondageDao.updateSondage(sondage);
+            response.sendRedirect("/sondage");
+        }else if (sondage instanceof Sondage_lieu_date){
+            String idDateSondage = request.getParameter("idDateSondage");
+            String idLieuSondage = request.getParameter("idLieuSondage");
+            DateSondage dateSondage = dateDao.getDateSondage(Long.parseLong(idDateSondage));
+            dateSondage.setDate1(dateChoix1);
+            dateSondage.setDate1(dateChoix2);
+            dateSondage.setDate1(dateChoix3);
+            LieuSondage lieuSondage = lieuDao.getLieuSondage(Long.parseLong(idLieuSondage));
+            lieuSondage.setLieu1(lieu1);
+            lieuSondage.setLieu1(lieu2);
+            lieuSondage.setLieu1(lieu3);
+            lieuDao.updateLieuSondage(lieuSondage);
+            dateDao.updateDateSondage(dateSondage);
+            ((Sondage_lieu_date) sondage).setDateSondage(dateSondage);
+            ((Sondage_lieu_date) sondage).setLieuSondage(lieuSondage);
+            sondageDao.updateSondage(sondage);
+            response.sendRedirect("/sondage");
+        }else {
+            response.sendRedirect("/sondage");
+        }
     }
 
     private void deleteSondage(HttpServletRequest request, HttpServletResponse response)
@@ -307,24 +368,20 @@ public class UserServlet extends HttpServlet {
 
     private void participerSondage(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ParseException {
-        String idSondage = request.getParameter("idSondage");
-        String idEmployee = request.getParameter("idEmployee");
         String nomSondage = request.getParameter("nomSondage");
         String dateChoisi = request.getParameter("dateChoisi");
         String lieuChoisi = request.getParameter("lieuChoisi");
 
         // String testDate = "29-Apr-2010,13:00:14 PM";
-        System.out.println("********************\n" + dateChoisi);
-        System.out.println("********************\n" + lieuChoisi);
-        System.out.println("********************\n" + nomSondage);
+
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(dateChoisi);
         //System.out.println(date);
         System.out.println("********************\n" + date);
-        Long idEmployeee = Long.parseLong(request.getParameter("idEmployee"));
-        Long idSondagee = Long.parseLong(request.getParameter("idSondage"));
-        Employee user = userDao.getUser(idEmployeee);
-        Sondage newSondage = sondageDao.getSondage(idSondagee);
+        Long idEmployee = Long.parseLong(request.getParameter("idEmployee"));
+        Long idSondage = Long.parseLong(request.getParameter("idSondage"));
+        Employee user = userDao.getUser(idEmployee);
+        Sondage newSondage = sondageDao.getSondage(idSondage);
         if(newSondage instanceof Sondage_lieu){
             User_sondageLieu user_sondage=new User_sondageLieu(user,newSondage,lieuChoisi);
             userSondageDao.saveUserSondage(user_sondage);
@@ -344,32 +401,51 @@ public class UserServlet extends HttpServlet {
     //Reunion controller
     private void reunion(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
+        String idReunion1=request.getParameter("idReunion");
+
+        //  List<User_reunion> user_reunions=userReunionDao.getAllUserReunion();
+        Reunion newReunion=null;
+        if (idReunion1!=null) {
+            Long idReunion = Long.parseLong(idReunion1);
+            newReunion = reunionDao.getReunion(idReunion);
+            List<User_reunion> user_reunions=newReunion.getUser_reunion();
+            request.setAttribute("user_reunions",user_reunions);
+        }
+
+
         List<Reunion> listReunion = reunionDao.getAllReunion();
         List<User_reunion> listUserReunion = userReunionDao.getAllUserReunion();
         List<Employee> listUser = userDao.getAllUser();
+        List<Sondage> listSondage = sondageDao.getAllSondage();
+        List<User_sondage> listUserSondage = userSondageDao.getAllUserSondage();
         System.out.println(listReunion.size());
         request.setAttribute("listReunion", listReunion);
+        request.setAttribute("listUserReunion", listUserReunion);
         request.setAttribute("listUser", listUser);
+        request.setAttribute("listSondage", listSondage);
+        request.setAttribute("listUserSondage", listUserSondage);
         RequestDispatcher dispatcher = request.getRequestDispatcher("reunion.jsp");
         dispatcher.forward(request, response);
 
     }
 
     private void insertReunion(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+            throws SQLException, IOException, ParseException {
         String nomReunion = request.getParameter("nomReunion");
+        String dateCreationReunion = request.getParameter("dateCreationReunion");
         String dateReunion = request.getParameter("dateReunion");
         String resumeReunion = request.getParameter("resumeReunion");
 
         // String testDate = "29-Apr-2010,13:00:14 PM";
-        //DateFormat formatter = new SimpleDateFormat("d-MMM-yyyy,HH:mm:ss aaa");
-        //Date date = formatter.parse(testDate);
-        //System.out.println(date);
+        //System.out.println("********************\n" + dateSondage);
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateReunion1 = formatter.parse(dateReunion);
+       // Date dateCreationReunion1 = formatter.parse(dateCreationReunion);
         System.out.println("********************\n" + dateReunion);
-        Long idEmployee = Long.parseLong(request.getParameter("idEmployee"));
-        Employee user = userDao.getUser(idEmployee);
+       // Long idEmployee = Long.parseLong(request.getParameter("idEmployee"));
+       // Employee user = userDao.getUser(idEmployee);
 
-        Reunion newReunion = new Reunion(nomReunion,resumeReunion, new Date());
+        Reunion newReunion = new Reunion(nomReunion,resumeReunion, dateReunion1,true);
 
         reunionDao.saveReunion(newReunion);
         response.sendRedirect("reunion");
@@ -381,7 +457,9 @@ public class UserServlet extends HttpServlet {
 
         long id = Integer.parseInt(request.getParameter("id"));
         List<Employee> existingUser = userDao.getAllUser();
+        List<User_sondage> listUserSondage = userSondageDao.getAllUserSondage();
         request.setAttribute("user", existingUser);
+        request.setAttribute("listUserSondage", listUserSondage);
         RequestDispatcher dispatcher = request.getRequestDispatcher("reunion-form.jsp");
 
         dispatcher.forward(request, response);
@@ -410,6 +488,50 @@ public class UserServlet extends HttpServlet {
         long id = Long.parseLong(request.getParameter("id"));
         reunionDao.deleteReunion(id);
         response.sendRedirect("reunion");
+    }
+    private void participerReunion(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ParseException {
+
+        String allergie = request.getParameter("allergie");
+
+        // String testDate = "29-Apr-2010,13:00:14 PM";
+
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = formatter.parse(dateChoisi);
+
+        Long idEmployeee = Long.parseLong(request.getParameter("idEmployee"));
+        Long idReunion = Long.parseLong(request.getParameter("idReunion"));
+        Employee user = userDao.getUser(idEmployeee);
+        Reunion newReunion = reunionDao.getReunion(idReunion);
+
+        if(newReunion.isPause_cafe()){
+            User_reunion user_reunion=new User_reunion(user,newReunion,allergie);
+            System.out.println("nom: "+user.getName()+"  reunion : "+newReunion.getIntitule_reunion()+"   allergie: "+allergie);
+            userReunionDao.saveUserReunion(user_reunion);
+            System.out.println("il y a une pause café");
+            response.sendRedirect("/reunion");
+        }else{
+            User_reunion user_reunion=new User_reunion(user,newReunion,"ras");
+            userReunionDao.saveUserReunion(user_reunion);
+            response.sendRedirect("/reunion");
+        }
+
+    }
+    private void participantReunion(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ParseException, ServletException {
+
+        Long idReunion = Long.parseLong(request.getParameter("idReunion"));
+      //  List<User_reunion> user_reunions=userReunionDao.getAllUserReunion();
+        Reunion newReunion = reunionDao.getReunion(idReunion);
+        List<User_reunion> user_reunions=newReunion.getUser_reunion();
+        for (User_reunion a:user_reunions) {
+            System.out.println("*********\n"+a.getEmployee().getName());
+        }
+
+request.setAttribute("user_reunions",user_reunions);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("reunion.jsp");
+        dispatcher.forward(request, response);
+
     }
 
 }

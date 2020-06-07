@@ -80,7 +80,7 @@
         <h2>
             <a class="btn btn-success" href="new">Nouveau Reunion</a>
             &nbsp;&nbsp;&nbsp;
-            <a class="btn btn-primary" href="list-sondage?page=1">Liste des reunion</a>
+            <a class="btn btn-primary" href="list-reunion?page=1">Liste des reunion</a>
 
         </h2>
     </center>
@@ -108,14 +108,14 @@
     });
 </script>
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-6">
         <div id="accordion">
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
                         <button class="btn btn-primary text-uppercase" data-toggle="collapse" data-target="#collapseOne"
                                 aria-expanded="true" aria-controls="collapseOne">
-                            Créer sondage
+                            Créer reunion
                         </button>
                     </h5>
                 </div>
@@ -125,75 +125,48 @@
                         <div class="container">
                             <form method="post" action="creerReunion">
                                 <div class="form-group row">
-                                    <label for="name" class="col-sm-4 col-form-label">Nom sondage</label>
+                                    <label for="name" class="col-sm-4 col-form-label">Nom reunion</label>
                                     <div class="col-sm-8">
                                         <input type="text" id="name" name="nomReunion" required class="form-control"
-                                               placeholder="nom sondage" value="">
+                                               placeholder="nom reunion" value="">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="name" class="col-sm-4 col-form-label">type sondage</label>
-
-                                    <div class="btn-group btn-group-toggle col-sm-8" data-toggle="buttons">
-                                        <label class="btn btn-secondary">
-                                            <input type="radio" name="type" value="date" id="option1" autocomplete="off"> type date
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                            <input type="radio" name="type" value="lieu" id="option2" autocomplete="off"> type lieu
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                            <input type="radio" name="type" value="lieuDate" id="option3" autocomplete="off"> type lieu et date
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="dateReunion" class="col-sm-4 col-form-label">Date création de sondage</label>
+                                    <label for="name1" class="col-sm-4 col-form-label">Résumé reunion</label>
                                     <div class="col-sm-8">
-                                        <input type="date" id="dateReunion" name="dateReunion"  class="form-control">
+                                        <input type="text" id="name1" name="resumeReunion" required class="form-control"
+                                               placeholder="résumé de la reunion" value="">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <label for="dateCreationReunion" class="col-sm-4 col-form-label">Date création de reunion</label>
+                                    <div class="col-sm-8">
+                                        <input type="date" id="dateCreationReunion" name="dateReunion"  class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="nomEmploye" class="col-sm-4 col-form-label">Nom employe</label>
+                                    <label for="nomEmploye" class="col-sm-4 col-form-label">Date de la réunion</label>
                                     <div class="col-sm-8">
-                                        <select name="idEmployee" class="form-control inputstl" id="nomEmploye">
-                                            <% ArrayList<Employee> emp = (ArrayList<Employee>) request.getAttribute("listUser");
-                                                for (int i = 0; i < 5; i++) {%>
-                                            <option value="<%=emp.get(i).getId()%>"><%=emp.get(i).getName()%></option>
+                                        <select name="dateReunion" class="form-control inputstl" id="dateReunion">
+                                            <% ArrayList<User_sondage> user_sondages = (ArrayList<User_sondage>) request.getAttribute("listUserSondage");
+                                              if(user_sondages.size()!=0){  for (int i = 0; i < user_sondages.size(); i++) {
+                                            if(user_sondages.get(i) instanceof User_sondageDate){%>
+                                                <option value="<%=((User_sondageDate) user_sondages.get(i)).getDateChoisi()%>"><%=((User_sondageDate) user_sondages.get(i)).getDateChoisi()%></option>
+                                            <% }else if (user_sondages.get(i) instanceof User_sondageLieuDate){%>
+                                            <option value="<%=((User_sondageLieuDate) user_sondages.get(i)).getDateChoisi()%>"><%=((User_sondageLieuDate) user_sondages.get(i)).getDateChoisi()%></option>
 
-                                            <%}%>
+                                            <%}}}%>
 
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Date voulu</label>
-                                    <div class="col-sm-3">
-                                        <input type="date" name="date1"  class="form-control">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="date" name="date2"  class="form-control">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="date" name="date3"  class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Lieu voulu</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" name="lieu1"  class="form-control" placeholder="lieu1">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" name="lieu2"  class="form-control" placeholder="lieu2">
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" name="lieu3"  class="form-control" placeholder="lieu3">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <center>
                                         <div class="col-sm-8">
-                                            <input type="submit" class="btn btn-primary" VALUE="CREER SONDAGE">
+                                            <input type="submit" class="btn btn-primary" VALUE="CREER REUNION">
                                         </div>
                                     </center>
                                 </div>
@@ -209,7 +182,7 @@
                         <button class="btn btn-primary collapsed text-uppercase" data-toggle="collapse"
                                 data-target="#collapseTwo"
                                 aria-expanded="false" aria-controls="collapseTwo">
-                            Participer à un sondage
+                            Participer à une reunion
                         </button>
                     </h5>
                 </div>
@@ -219,10 +192,9 @@
                             <form method="post" action="/participerReunion">
 
                                 <div class="form-group row">
-                                    <label for="nomReunion" class="col-sm-4 col-form-label">Nom sondage</label>
+                                    <label for="idReunion" class="col-sm-4 col-form-label">Nom reunion</label>
                                     <div class="col-sm-8">
-                                        <input type="hidden" name="idReunion" value="idReunion" id="idReunion" autocomplete="off">
-                                        <select name="nomReunion" class="form-control " id="nomReunion">
+                                        <select name="idReunion" class="form-control " id="idReunion">
                                             <% ArrayList<Reunion> reunion=(ArrayList<Reunion>) request.getAttribute("listReunion");
 
                                                 for (int i = 0; i < reunion.size(); i++) {%>
@@ -239,10 +211,13 @@
                                     <label for="nomEmploye" class="col-sm-4 col-form-label">Nom employe</label>
                                     <div class="col-sm-8">
                                         <select name="idEmployee" class="form-control inputstl" id="nomEmploye1">
-                                            <%  for (int i = 0; i < emp.size(); i++) {%>
-                                            <option value="<%=emp.get(i).getId()%>"><%=emp.get(i).getName()%></option>
+                                            <%  ArrayList<Employee> employees=(ArrayList<Employee>) request.getAttribute("listUser");
+                                            if(employees.size()!=0){
+                                                for (int i = 0; i < employees.size(); i++) {%>
+                                            <option value="<%=employees.get(i).getId()%>"><%=employees.get(i).getName()%></option>
 
-                                            <%}%>
+                                            <%}
+                                            }%>
 
                                         </select>
                                     </div>
@@ -250,52 +225,12 @@
 
 
                                 <div class="form-group row">
-                                    <label for="dateChoisi" class="col-sm-3 col-form-label">Choix de la date</label>
+                                    <label for="allergieChoisi" class="col-sm-3 col-form-label">Les allergies</label>
                                     <div class="col-sm-3">
-                                        <input type="date" id="dateChoisi" name="dateChoisi"
+                                        <input type="text" id="allergieChoisi" name="allergie"
                                                class="form-control"
-                                               placeholder="Date Choisi">
+                                               placeholder="Dites vos allergies">
                                     </div>
-                                    <label for="dateChoisi" class="col-sm-3 col-form-label">Choix du lieu</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="lieuChoisi" name="lieuChoisi"
-                                               class="form-control"
-                                               placeholder="Choisir le lieu">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Lieu choisi</label>
-                                    <div class="btn-group btn-group-toggle col-sm-8" data-toggle="buttons">
-                                        <label class="btn btn-secondary">
-
-                                            <input type="text" readonly id="lieuChoisi1"  name="lieuChosi" value="date">
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                            <input type="text" readonly id="lieuChoisi2" name="lieuChosi" value="lieu">
-                                        </label>
-                                        <label class="btn btn-secondary">
-                                            <input type="text" readonly id="lieuChoisi3" name="lieuChosi" value="lieuDate">
-                                        </label>
-                                    </div>
-
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Date choisi</label>
-                                    <div class="btn-group btn-group-toggle col-sm-8" data-toggle="buttons">
-                                        <label class="btn btn-secondary">
-                                            <input type="text" readonly id="dateChoisi1"  name="dateChoisi1" value="date">
-                                        </label>
-                                        <label class="btn btn-secondary">
-
-                                            <input type="text"readonly id="dateChoisi2" name="dateChoisi2" value="lieu">
-                                        </label>
-                                        <label class="btn btn-secondary">
-
-                                            <input readonly type="text" id="dateChoisi3" name="dateChoisi3" value="dateChosi">
-                                        </label>
-                                    </div>
-
                                 </div>
                                 <div class="form-group row">
                                     <center>
@@ -305,6 +240,7 @@
                                         </div>
                                     </center>
                                 </div>
+
                             </form>
                         </div>
                     </div>
@@ -316,17 +252,26 @@
                         <button class="btn btn-primary collapsed text-uppercase" data-toggle="collapse"
                                 data-target="#collapseThree"
                                 aria-expanded="false" aria-controls="collapseThree">
-                            Voir mes reunion ou d'autres reunion
+                            Voir les participants à une réunion
                         </button>
                     </h5>
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
                         <div class="container">
-                            <form method="post" action="/sondage/search">
+                            <form method="get" action="/participantReunion">
                                 <div class="form-inline">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Search"
-                                           aria-label="Search">
+                                    <select name="idReunion" class="form-control " >
+                                        <% ArrayList<User_reunion> user_reunions= (ArrayList<User_reunion>) request.getAttribute("user_reunions");
+                                                if (reunion.size()!=0){
+                                                    for (int i = 0; i < reunion.size(); i++) {%>
+
+                                        <option value="<%=reunion.get(i).getReunion_id()%>"><%=reunion.get(i).getIntitule_reunion()%></option>
+
+                                        <%}
+                                        }%>
+
+                                    </select>
                                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">RECHERCHER
                                     </button>
                                 </div>
@@ -334,32 +279,30 @@
                                     <thead class="table-dark">
                                     <tr>
                                         <th scope="col"><b>Nom</b></th>
-                                        <th scope="col"><b>Date</b></th>
+                                        <th scope="col"><b>Allergies</b></th>
                                         <th scope="col"><b>Actions</b></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <%-- Fetching the attributes of the request object which was previously set by the servlet "StudentServlet.java" --%>
-                                        <%ArrayList<Reunion> std =(ArrayList<Reunion>)request.getAttribute("listReunion");
-                                              String spageid=request.getParameter("page");
-                                              if(spageid!=null){
-                                                  System.out.println("***********************\n"+spageid+"**********************\n");
-                                               }
-                                             // for(int i=pageid;i<end;i++){
-                                              for(int i=0;i<2;i++){%>
+                                        <%if (user_reunions!=null){
+                                            if(user_reunions.size()!=0){
+                                                for(int i=0;i<user_reunions.size();i++){%>
                                     <%-- Arranging data in tabular form--%>
                                     <tr>
-                                        <th scope="row"><%=std.get(i).getIntitule_reunion()%>
+                                        <th scope="row"><%=user_reunions.get(i).getEmployee().getName()%>
                                         </th>
-                                        <td><%=std.get(i).getDate_reunion()%>
+                                        <td><%=user_reunions.get(i).getAllergie()%>
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary" href="editReunion?id=<%=std.get(i).getReunion_id()%>">Edit</a>
+                                            <a class="btn btn-primary" href="editReunion?id=<%=user_reunions.get(i).getEmployee().getName()%>">Edit</a>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-danger " href="deleteReunion?id=<%=std.get(i).getReunion_id()%>">Delete</a>
+                                            <a class="btn btn-danger " href="deleteReunion?id=<%=user_reunions.get(i).getAllergie()%>">Delete</a>
                                         </td>
                                     </tr>
-                                        <%}%>
+                                        <%}
+                                        }
+                                        }%>
 
 
                                 </table>
@@ -371,11 +314,12 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <table class="table table-striped" width="500px;" align="center">
             <thead class="table-dark">
             <tr>
-                <th scope="col"><b>Nom</b></th>P
+                <th scope="col"><b>Nom</b></th>
+                <th scope="col">Description</th>
                 <th scope="col"><b>Date</b></th>
                 <th scope="col"><b>Actions</b></th>
             </tr>
@@ -384,26 +328,24 @@
 
 
             <%-- Fetching the attributes of the request object which was previously set by the servlet "StudentServlet.java" --%>
-                <%ArrayList<Reunion> stdd =(ArrayList<Reunion>)request.getAttribute("listReunion");
-            String spageidd=request.getParameter("page");
-            if(spageid!=null){
-
-            }
-            // for(int i=pageid;i<end;i++){
-            for(int i=0;i<std.size();i++){%>
+                <% if (reunion.size()!=0){
+                    for(int i=0;i<reunion.size();i++){%>
             <%-- Arranging data in tabular form--%>
-            <tr>
-                <th scope="row"><%=std.get(i).getIntitule_reunion()%>
-                </th>
-                <td><%=std.get(i).getDate_reunion()%>
-                </td>
-                <td>
-                    <a class="btn btn-primary" href="editReunion?id=<%=std.get(i).getReunion_id()%>">Edit</a>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a class="btn btn-danger " href="deleteReunion?id=<%=std.get(i).getReunion_id()%>">Delete</a>
-                </td>
-            </tr>
+                    <tr>
+                        <th scope="row"><%=reunion.get(i).getIntitule_reunion()%>
+                        </th>
+                        <td><%=reunion.get(i).getDate_reunion()%>
+                        </td>
+                        <td><%=reunion.get(i).getResume_reunion()%>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="editReunion?id=<%=reunion.get(i).getReunion_id()%>">Edit</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-danger " href="deleteReunion?id=<%=reunion.get(i).getReunion_id()%>">Delete</a>
+                        </td>
+                    </tr>
                 <%}
+                }
             %>
         </table>
     </div>

@@ -37,7 +37,7 @@ public class SampleWebService1 {
         request.setAttribute("list",listUser);
         request.setAttribute("obj", new String("IT Works"));
         System.out.println("/INDEX fj called");
-        return new Viewable("/test.jsp", null);
+        return new Viewable("/header.jsp", null);
     }
     @GET
     @Path("indexee/test")

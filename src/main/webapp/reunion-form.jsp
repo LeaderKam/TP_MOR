@@ -1,14 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="servlet.dao.SondageDao" %>
-<%@ page import="test.testjpa.domain.Sondage" %>
-<%@ page import="test.testjpa.domain.Employee" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="test.testjpa.domain.*" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>User Management Application</title>
+	<title>Doodle Application</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
@@ -43,20 +42,13 @@
 
 <div id="tout">
 <div id="head">
-<center>
-		<h1 class="card">User Management</h1>
-        <h2>
-        	<a class="btn btn-success" href="new">Add New User</a>
-        	&nbsp;&nbsp;&nbsp;
-        	<a class="btn btn-primary" href="sondage?page=1">List All Users</a>
 
-        </h2>
-	</center>
 </div>
 <% String id=request.getParameter("id");
     SondageDao sondageDao=new SondageDao();
-    String nomSondage=sondageDao.getSondage(Long.parseLong(id)).getIntitule_son();
-    Date sondage=sondageDao.getSondage(Long.parseLong(id)).getDate_sondage();
+    Sondage sondage=sondageDao.getSondage(Long.parseLong(id));
+    String nomSondage = sondage.getIntitule_son();
+    Date dateReunion=sondageDao.getSondage(Long.parseLong(id)).getDate_sondage();
     String nomEmployee=sondageDao.getSondage(Long.parseLong(id)).getEmployee().getName();
 
     Long idEmployee=sondageDao.getSondage(Long.parseLong(id)).getEmployee().getId();
@@ -72,9 +64,17 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="dateSondage" class="col-sm-2 col-form-label">Department</label>
+            <label for="dateReunion" class="col-sm-2 col-form-label">Date reunion</label>
             <div class="col-sm-8">
-                <input type="datetime" id="dateSondage" required name="department" value="<%=sondage%>" class="form-control" placeholder="department">
+                <select name="dateReunion" class="form-control inputstl" id="dateReunion">
+                        <% ArrayList<User_sondage> user_sondages = (ArrayList<User_sondage>) request.getAttribute("listUserSondage");
+                            if(user_sondages.size()!=0){  for (int i = 0; i < user_sondages.size(); i++) {
+                            if(user_sondages.get(i) instanceof User_sondageDate){%>
+                    <option value="<%=((User_sondageDate) user_sondages.get(i)).getDateChoisi()%>"><%=((User_sondageDate) user_sondages.get(i)).getDateChoisi()%></option>
+                        <% }else if (user_sondages.get(i) instanceof User_sondageLieuDate){%>
+                    <option value="<%=((User_sondageLieuDate) user_sondages.get(i)).getDateChoisi()%>"><%=((User_sondageLieuDate) user_sondages.get(i)).getDateChoisi()%></option>
+
+                        <%}}}%>
             </div>
         </div>
         <div class="form-group row">

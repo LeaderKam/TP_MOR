@@ -44,7 +44,7 @@ public class ReunionController implements IController {
         Long idEmployee = Long.parseLong(request.getParameter("idEmployee"));
         Employee user = userDao.getUser(idEmployee);
 
-        Reunion newReunion = new Reunion(nomReunion,resumeReunion, new Date());
+        Reunion newReunion = new Reunion(nomReunion,resumeReunion, new Date(),false);
 
         reunionDao.saveReunion(newReunion);
         response.sendRedirect("reunion");

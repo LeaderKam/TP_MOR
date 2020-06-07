@@ -1,34 +1,35 @@
-package servlet.dao;
+package servlet.dao.rest;
 
 import servlet.config.HibernateUtil;
 import servlet.config.HibernateUtilEntityManager;
-import test.testjpa.domain.Sondage;
-
+import test.testjpa.domain.Employee;
+import test.testjpa.domain.Department;
 
 import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SondageDao {
-
+public class DepartmentRestDao {
 
     /**
-     * Get all Sondages
+     * Get all Departments
      *
      * @return
      */
     //@SuppressWarnings("unchecked")
-    public List<Sondage> getAllSondage() {
+    public List<Department> getAllDepartment() {
+
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-        List<Sondage> listOfSondage = new ArrayList<Sondage>();
+
+        List<Department> listOfDepartment = new ArrayList<Department>();
 
         try {
             // start a transaction
             tx.begin();
-            // return the list of sondage object
+            // return the list of department object
 
-            listOfSondage = test.getManager().createQuery("select a From Sondage a", Sondage.class).getResultList();
+            listOfDepartment = test.getManager().createQuery("select a From Department a", Department.class).getResultList();
             // commit transaction
             tx.commit();                       //transaction.commit();
         } catch (Exception e) {
@@ -38,24 +39,26 @@ public class SondageDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return listOfSondage;
+        return listOfDepartment;
     }
 
     /**
-     * Save Sondage
+     * Save Department
      *
-     * @param sondage
+     * @param department
      */
 
 
-    public void saveSondage(Sondage sondage) {
+    public void saveDepartment(Department department) {
+
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
+
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            test.getManager().persist(sondage);
+            test.getManager().persist(department);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -68,21 +71,25 @@ public class SondageDao {
     }
 
     /**
-     * Update Sondage
+     * Update Department
      *
-     * @param sondage
+     * @param department
      */
-    public void updateSondage(Sondage sondage) {
+    public void updateDepartment(Department department) {
+
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
+
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            boolean t = test.getManager().contains(sondage);
-                test.getManager().merge(sondage);
+            boolean t=test.getManager().contains(department);
+            if (t){
+                test.getManager().merge(department);
                 // commit transaction
                 tx.commit();
+            }
 
         } catch (Exception e) {
             if (tx != null) {
@@ -94,19 +101,21 @@ public class SondageDao {
     }
 
     /**
-     * Delete Sondage
+     * Delete Department
      *
      * @param id
      */
-    public void deleteSondage(Long id) {
+    public void deleteDepartment(Long id) {
+
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
+
         try {
             // start a transaction
             tx.begin();
             // save the student object
-            Sondage sondage = test.getManager().find(Sondage.class, id);
-            test.getManager().remove(sondage);
+            Department department = test.getManager().find(Department.class, id);
+            test.getManager().remove(department);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -119,20 +128,22 @@ public class SondageDao {
     }
 
     /**
-     * Get Sondage By ID
+     * Get Department By ID
      *
      * @param id
      * @return
      */
-    public Sondage getSondage(Long id) {
+    public Department getDepartment(Long id) {
+
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
-        Sondage sondage = null;
+
+        Department department = null;
         try {
             // start a transaction
             tx.begin();
-            // save the sondage object
-            sondage = test.getManager().find(Sondage.class, id);
+            // save the department object
+            department = test.getManager().find(Department.class, id);
             // commit transaction
             tx.commit();
         } catch (Exception e) {
@@ -142,6 +153,6 @@ public class SondageDao {
             e.printStackTrace();
         }
         test.getManager().close();
-        return sondage;
+        return department;
     }
 }

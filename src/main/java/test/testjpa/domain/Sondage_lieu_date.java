@@ -21,7 +21,7 @@ public class Sondage_lieu_date extends Sondage implements Serializable {
         this.dateSondage = dateSondage;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     public LieuSondage getLieuSondage() {
         return lieuSondage;
     }
@@ -30,7 +30,7 @@ public class Sondage_lieu_date extends Sondage implements Serializable {
         this.lieuSondage = lieuSondage;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     public DateSondage getDateSondage() {
         return dateSondage;
     }

@@ -11,9 +11,6 @@ public class DateSondage {
     private Date date2;
     private Date date3;
 
-    private Sondage_date sondage_date;
-    private Sondage_lieu_date sondage_lieu_date;
-
     public DateSondage() {
     }
 
@@ -55,23 +52,5 @@ public class DateSondage {
 
     public void setDate3(Date date3) {
         this.date3 = date3;
-    }
-
-    @OneToOne
-    public Sondage_date getSondage_date() {
-        return sondage_date;
-    }
-
-    public void setSondage_date(Sondage_date sondage_date) {
-        this.sondage_date = sondage_date;
-    }
-
-    @OneToOne
-    public Sondage_lieu_date getSondage_lieu_date() {
-        return sondage_lieu_date;
-    }
-
-    public void setSondage_lieu_date(Sondage_lieu_date sondage_lieu_date) {
-        this.sondage_lieu_date = sondage_lieu_date;
     }
 }

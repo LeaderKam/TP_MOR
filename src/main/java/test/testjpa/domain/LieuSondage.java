@@ -10,9 +10,6 @@ public class LieuSondage {
     private String lieu2;
     private String lieu3;
 
-    private Sondage_lieu sondage_lieu;
-    private Sondage_lieu_date sondage_lieu_date;
-
     public LieuSondage() {
     }
 
@@ -56,21 +53,4 @@ public class LieuSondage {
         this.lieu3 = lieu3;
     }
 
-    @OneToOne
-    public Sondage_lieu getSondage_lieu() {
-        return sondage_lieu;
-    }
-
-    public void setSondage_lieu(Sondage_lieu sondage_lieu) {
-        this.sondage_lieu = sondage_lieu;
-    }
-
-    @OneToOne
-    public Sondage_lieu_date getSondage_lieu_date() {
-        return sondage_lieu_date;
-    }
-
-    public void setSondage_lieu_date(Sondage_lieu_date sondage_lieu_date) {
-        this.sondage_lieu_date = sondage_lieu_date;
-    }
 }

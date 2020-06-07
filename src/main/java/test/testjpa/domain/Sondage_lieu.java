@@ -20,7 +20,7 @@ public class Sondage_lieu extends Sondage implements Serializable {
         this.lieuSondage = lieuSondage;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     public LieuSondage getLieuSondage() {
         return lieuSondage;
     }

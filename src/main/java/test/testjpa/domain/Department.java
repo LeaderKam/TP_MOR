@@ -39,7 +39,7 @@ public class Department {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL,fetch= FetchType.LAZY)
+	@OneToMany(mappedBy = "department")
 	public List<Employee> getEmployees() {
 		return employees;
 	}

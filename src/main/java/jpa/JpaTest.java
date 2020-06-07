@@ -3,6 +3,7 @@ package jpa;
 import javax.persistence.*;
 
 import test.testjpa.domain.*;
+import test.testjpa.domain.rest.*;
 import test.testjpa.domain.strategy.ChoixMajoritaire;
 import test.testjpa.domain.strategy.Context;
 
@@ -31,23 +32,15 @@ public class JpaTest {
 		JpaTest test = new JpaTest(manager);
 		EntityTransaction tx = manager.getTransaction();
 		tx.begin();
-		
-		
-//		Department d=new Department();
-//		User u= new User();
-//		manager.persist(u);
-//
-//		
-//		Reunion r= new Reunion();
-//		
 
 		try {
 
-			test.createEmployees();
-			test.createSondage();
-			test.createReunion();
+			//test.createEmployees();
+			//test.createSondage();
+			//test.createReunion();
 			//test.nSelect();
-			test.createUserSondage();
+			//test.createUserSondage();
+			test.createEmployeesRest();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,12 +69,16 @@ test.listSondageLieu();
 			manager.persist(department);
 			manager.persist(new Employee("koussaila",department));
 
-			manager.persist(new Reunion("Captain Nemo","reunion test",new Date()));
+			manager.persist(new Reunion("Captain Nemo","reunion test",new Date(),true));
 
 		}
 		Department department = new Department("jpa");
+		Department department1 = new Department("ML");
 		manager.persist(department);
+		manager.persist(department1);
+
 		Employee marius=new Employee("marius",department);
+		Employee kam=new Employee("Sie kam",department1);
 
 		Context ctx=new Context(new ChoixMajoritaire());
 		//ctx.appliquerStrategy(new ChoixMajoritaire(),);
@@ -89,9 +86,12 @@ test.listSondageLieu();
 		//ctx.appliquerStrategy();
 		manager.persist(marius);
 
-		Reunion reu=new Reunion("data ia","c'est un test",new Date());
-		manager.persist(reu);
-		manager.persist(new User_reunion(marius,reu));
+		Reunion reunion1=new Reunion("data ia","c'est un test 1",new Date(),false);
+		Reunion reunion2=new Reunion("deep L","c'est un test 1",new Date(),false);
+		manager.persist(reunion1);
+		manager.persist(reunion2);
+		manager.persist(new User_reunion(marius,reunion1,"ras"));
+		manager.persist(new User_reunion(kam,reunion2,"ras"));
 	}
 
 	private void nSelect(){
@@ -110,6 +110,7 @@ test.listSondageLieu();
 		}
 	}
 
+
 	private void createEmployees() {
 		int numOfEmployees = manager.createQuery("Select a From Employee a",
 				Employee.class).getResultList().size();
@@ -121,9 +122,47 @@ test.listSondageLieu();
 		}
 
 	}
+	private void createEmployeesRest() {
+		int numOfEmployees = manager.createQuery("Select a From EmployeeRest a",
+				EmployeeRest.class).getResultList().size();
+		if (numOfEmployees == 0) {
+			DepartmentRest department = new DepartmentRest("java");
+			manager.persist(department);
+			manager.persist(new EmployeeRest("KAM",department));
+			manager.persist(new EmployeeRest("SIE",department));
+		}
 
+	}
 	private void createSondage() {
 		int numOfSondage = manager.createQuery("Select a From Sondage a",
+				Sondage.class).getResultList().size();
+		System.out.println("****************************\n"+numOfSondage);
+
+		Department department = new Department("IA");
+		Employee employee = new Employee("kam",department);
+
+		DateSondage dateSondage=new DateSondage(new Date(),new Date(),new Date());
+		LieuSondage lieuSondage=new LieuSondage("cocody","marcory","angré");
+
+		//sondage date
+		Sondage_date sondage_date=new Sondage_date("Big Data",new Date(),employee,dateSondage);
+
+		//sondage lieu
+		Sondage_lieu sondage_lieu= new Sondage_lieu("IA",new Date(),employee,lieuSondage);
+
+		//sondage lieu et date
+		Sondage_lieu_date sondage_lieu_date=new Sondage_lieu_date("Deep Learning",new Date(),employee,lieuSondage,dateSondage);
+
+		manager.persist(department);
+		manager.persist(employee);
+
+		manager.persist(sondage_date);
+		manager.persist(sondage_lieu);
+		manager.persist(sondage_lieu_date);
+
+	}
+	private void createSondageRest() {
+		int numOfSondage = manager.createQuery("Select a From SondageRest a",
 				Sondage.class).getResultList().size();
 		System.out.println("****************************\n"+numOfSondage);
 
@@ -214,9 +253,8 @@ test.listSondageLieu();
 
 		for (Sondage next : resultList) {
 			if (next instanceof Sondage_lieu){
-				((Sondage_lieu) next).getLieuSondage().getLieu1();
-				if(next.getSondage_id()==8)
-					System.out.println("kammme: " + ((Sondage_lieu) next).getLieuSondage().getLieu1());
+;
+				System.out.println("kammme: " + ((Sondage_lieu) next).getLieuSondage().getLieu1());
 			}
 
 		}

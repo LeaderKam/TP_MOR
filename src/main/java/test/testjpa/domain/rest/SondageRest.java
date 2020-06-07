@@ -1,4 +1,9 @@
-package test.testjpa.domain;
+package test.testjpa.domain.rest;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+import test.testjpa.domain.Employee;
+import test.testjpa.domain.User_sondage;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -7,20 +12,19 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Sondage implements Serializable {
+public class SondageRest implements Serializable {
 
     private Long sondage_id;
     private String intitule_sondage;
     private Date date_sondage;
-    private Employee employee;
+    private test.testjpa.domain.Employee employee;
     private List<User_sondage> user_sondages=new ArrayList<User_sondage>();
 
-    public Sondage() {
+    public SondageRest() {
 
     }
 
-    public Sondage(String intitule_son, Date date, Employee employee) {
+    public SondageRest(String intitule_son, Date date, test.testjpa.domain.Employee employee) {
         this.intitule_sondage = intitule_son;
         this.date_sondage=date;
         this.employee = employee;
@@ -53,6 +57,7 @@ public abstract class Sondage implements Serializable {
     }
 
     @ManyToOne
+    @JsonBackReference
     public Employee getEmployee() {
         return employee;
     }
@@ -61,7 +66,7 @@ public abstract class Sondage implements Serializable {
         this.employee = employee;
     }
 
-    @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+/*    @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
     public List<User_sondage> getUser_sondages() {
         return user_sondages;
     }
@@ -69,6 +74,6 @@ public abstract class Sondage implements Serializable {
     public void setUser_sondages(List<User_sondage> user_sondages) {
         this.user_sondages = user_sondages;
     }
-
+*/
 
 }

@@ -15,7 +15,7 @@ public class UserSondageDao {
      * @return
      */
     //@SuppressWarnings("unchecked")
-    public List<User_sondage> getAllUserUser_sondage() {
+    public List<User_sondage> getAllUserSondage() {
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
         List<User_sondage> listOfUser_sondage = new ArrayList<User_sondage>();
@@ -44,8 +44,8 @@ public class UserSondageDao {
      * @param user_sondage
      */
 
-
     public void saveUserSondage(User_sondage user_sondage) {
+
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
         try {
@@ -69,7 +69,7 @@ public class UserSondageDao {
      *
      * @param user_sondage
      */
-    public void updateUser_sondage(User_sondage user_sondage) {
+    public void updateUserSondage(User_sondage user_sondage) {
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
         try {

@@ -1,9 +1,6 @@
 package test.testjpa.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class User_reunion {
@@ -11,14 +8,16 @@ public class User_reunion {
     private Long user_reunion_id;
     private Employee employee;
     private Reunion reunion;
+    private String allergie;
 
     public User_reunion() {
 
     }
 
-    public User_reunion(Employee employee, Reunion reunion) {
+    public User_reunion(Employee employee, Reunion reunion,String allergie) {
         this.employee = employee;
         this.reunion = reunion;
+        this.allergie=allergie;
     }
 
     @Id
@@ -31,7 +30,7 @@ public class User_reunion {
         this.user_reunion_id = user_reunion_id;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     public Employee getEmployee() {
         return employee;
     }
@@ -47,5 +46,13 @@ public class User_reunion {
 
     public void setReunion(Reunion reunion) {
         this.reunion = reunion;
+    }
+
+    public String getAllergie() {
+        return allergie;
+    }
+
+    public void setAllergie(String allergie) {
+        this.allergie = allergie;
     }
 }

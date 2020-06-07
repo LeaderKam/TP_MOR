@@ -13,9 +13,6 @@ import java.util.List;
 public class ReunionDao {
 
 
-    HibernateUtilEntityManager test = new HibernateUtilEntityManager();
-    EntityTransaction tx = test.getManager().getTransaction();
-
     /**
      * Get all Reunions
      *
@@ -23,7 +20,8 @@ public class ReunionDao {
      */
     //@SuppressWarnings("unchecked")
     public List<Reunion> getAllReunion() {
-
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
         List<Reunion> listOfReunion = new ArrayList<Reunion>();
 
         try {
@@ -51,7 +49,8 @@ public class ReunionDao {
 
 
     public void saveReunion(Reunion reunion) {
-
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
         try {
             // start a transaction
             tx.begin();
@@ -74,6 +73,8 @@ public class ReunionDao {
      * @param reunion
      */
     public void updateReunion(Reunion reunion) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
         try {
             // start a transaction
             tx.begin();
@@ -100,6 +101,8 @@ public class ReunionDao {
      * @param id
      */
     public void deleteReunion(Long id) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
         try {
             // start a transaction
             tx.begin();
@@ -124,6 +127,8 @@ public class ReunionDao {
      * @return
      */
     public Reunion getReunion(Long id) {
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
         Reunion reunion = null;
         try {
             // start a transaction

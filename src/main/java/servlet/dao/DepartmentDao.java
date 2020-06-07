@@ -11,10 +11,6 @@ import java.util.List;
 
 public class DepartmentDao {
 
-
-    HibernateUtilEntityManager test = new HibernateUtilEntityManager();
-    EntityTransaction tx = test.getManager().getTransaction();
-
     /**
      * Get all Departments
      *
@@ -22,6 +18,9 @@ public class DepartmentDao {
      */
     //@SuppressWarnings("unchecked")
     public List<Department> getAllDepartment() {
+
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
 
         List<Department> listOfDepartment = new ArrayList<Department>();
 
@@ -52,6 +51,9 @@ public class DepartmentDao {
 
     public void saveDepartment(Department department) {
 
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
+
         try {
             // start a transaction
             tx.begin();
@@ -74,6 +76,10 @@ public class DepartmentDao {
      * @param department
      */
     public void updateDepartment(Department department) {
+
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
+
         try {
             // start a transaction
             tx.begin();
@@ -100,6 +106,10 @@ public class DepartmentDao {
      * @param id
      */
     public void deleteDepartment(Long id) {
+
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
+
         try {
             // start a transaction
             tx.begin();
@@ -124,6 +134,10 @@ public class DepartmentDao {
      * @return
      */
     public Department getDepartment(Long id) {
+
+        HibernateUtilEntityManager test = new HibernateUtilEntityManager();
+        EntityTransaction tx = test.getManager().getTransaction();
+
         Department department = null;
         try {
             // start a transaction

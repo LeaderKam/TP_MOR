@@ -26,7 +26,7 @@
         <h2>
         	<a class="btn btn-outline-success" href="new">Add New User</a>
         	&nbsp;&nbsp;&nbsp;
-        	<a class="btn btn-primary" href="list-user?page=1">List All Users</a>
+        	<a class="btn btn-primary" href="list-user">List All Users</a>
 
         </h2>
 	</center>
@@ -43,27 +43,18 @@
               <tbody>
 
               <%-- Fetching the attributes of the request object which was previously set by the servlet "StudentServlet.java" --%>
-              <%ArrayList<Employee> std =(ArrayList<Employee>)request.getAttribute("listUser");
-              String spageid=request.getParameter("page");
-              int pageid=Integer.parseInt(spageid);
-              int total=(int)(std.size()/1000);
-              //System.out.println(std.get(0));
-              int end=0;
-              if(pageid==1){end=total;}
-             else{
-                  pageid=pageid-1;
-                  pageid=pageid*total;
-                  end=pageid+total;
-              }
-              for(int i=pageid;i<end;i++){%>
+              <%ArrayList<Employee> emp =(ArrayList<Employee>)request.getAttribute("listUser");
+
+
+              for(int i=0;i<emp.size();i++){%>
               <%-- Arranging data in tabular form--%>
                     <tr>
-                    <th scope="row"><%=std.get(i-1).getId()%></th>
-                        <td><%=std.get(i-1).getName()%></td>
+                    <th scope="row"><%=emp.get(i).getId()%></th>
+                        <td><%=emp.get(i).getName()%></td>
                         <td>
-                            <a class="btn btn-primary" href="edit?id=<%=std.get(i-1).getId()%>">Edit</a>
+                            <a class="btn btn-primary" href="edit?id=<%=emp.get(i).getId()%>">Edit</a>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <a class="btn btn-danger " href="delete?id=<%=std.get(i-1).getId()%>">Delete</a>
+                            <a class="btn btn-danger " href="delete?id=<%=emp.get(i).getId()%>">Delete</a>
                         </td>
                     </tr>
               <%}%>

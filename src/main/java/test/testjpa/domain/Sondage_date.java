@@ -20,7 +20,7 @@ public class Sondage_date extends Sondage implements Serializable {
         this.dateSondage = dateSondage;
     }
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     public DateSondage getDateSondage() {
         return dateSondage;
     }

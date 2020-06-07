@@ -1,42 +1,40 @@
-package test.testjpa.domain;
+package test.testjpa.domain.rest;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+import test.testjpa.domain.Sondage;
 
 import javax.persistence.*;
-
-/**
- * @author sievi
- *
- */
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author sievi
+ */
+
 @Entity
 //@Transactional
-public class Employee implements Serializable {
+public class EmployeeRest implements Serializable {
 	
 	
 	private Long user_id;
 	private String name;
 	private List<Sondage> sondages=new ArrayList<Sondage>();
-	private Department department;
-	private List<User_reunion> user_reunions=new ArrayList<User_reunion>();
-	private List<User_sondage> user_sondages=new ArrayList<User_sondage>();
+	private DepartmentRest department;
+	/*private List<User_reunion> user_reunions=new ArrayList<User_reunion>();
+	private List<User_sondage> user_sondages=new ArrayList<User_sondage>();*/
 
-	public Employee() {
+	public EmployeeRest() {
 
 	}
 
-	public Employee(String name, Department department) {
+	public EmployeeRest(String name, DepartmentRest department) {
 		this.name = name;
 		this.department = department;
 	}
 
-	public Employee(String name) {
+	public EmployeeRest(String name) {
 		this.name = name;
 	}
 
@@ -58,16 +56,18 @@ public class Employee implements Serializable {
 		this.name = name;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	public Department getDepartment() {
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonBackReference
+	public DepartmentRest getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(Department department) {
+	public void setDepartment(DepartmentRest department) {
 		this.department = department;
 	}
 
 	@OneToMany(mappedBy = "employee")
+	@JsonManagedReference
 	public List<Sondage> getSondages() {
 		return sondages;
 	}
@@ -76,7 +76,7 @@ public class Employee implements Serializable {
 		this.sondages = sondages;
 	}
 
-	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
+	/*@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
 	public List<User_reunion> getUser_reunions() {
 		return user_reunions;
 	}
@@ -85,7 +85,7 @@ public class Employee implements Serializable {
 		this.user_reunions = user_reunions;
 	}
 
-	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
 	public List<User_sondage> getUser_sondages() {
 		return user_sondages;
 	}
@@ -93,7 +93,7 @@ public class Employee implements Serializable {
 	public void setUser_sondages(List<User_sondage> user_sondages) {
 		this.user_sondages = user_sondages;
 	}
-
+	*/
 	@Override
 	public String toString() {
 		return "Employee [id=" + user_id + ", name=" + name + ", department=" + department.getName() + "]";

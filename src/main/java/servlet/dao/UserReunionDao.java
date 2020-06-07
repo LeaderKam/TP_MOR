@@ -49,7 +49,6 @@ public class UserReunionDao {
 
 
     public void saveUserReunion(User_reunion userReunion) {
-
         HibernateUtilEntityManager test = new HibernateUtilEntityManager();
         EntityTransaction tx = test.getManager().getTransaction();
         try {
