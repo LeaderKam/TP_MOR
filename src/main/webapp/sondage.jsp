@@ -320,63 +320,40 @@
                         <button class="btn btn-primary collapsed text-uppercase" data-toggle="collapse"
                                 data-target="#collapseThree"
                                 aria-expanded="false" aria-controls="collapseThree">
-                            Voir mes sondages ou d'autres sondages
+                            Voir les participants au sondages
                         </button>
                     </h5>
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
                         <div class="container">
-                            <form method="post" action="/sondage/search">
-                                <div class="form-inline">
-                                    <input class="form-control mr-sm-2" type="search" placeholder="Search"
-                                           aria-label="Search">
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">RECHERCHER
-                                    </button>
-                                </div>
-                                <table class="table table-striped" width="500px;" align="center">
+                          <table class="table table-striped" width="500px;" align="center">
                                     <thead class="table-dark">
                                     <tr>
-                                        <th scope="col"><b>Nom</b></th>
-                                        <th scope="col"><b>Date</b></th>
+                                        <th scope="col"><b>Nom employee</b></th>
+                                        <th scope="col"><b>Nom sondage</b></th>
                                         <th scope="col"><b>Actions</b></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <%-- Fetching the attributes of the request object which was previously set by the servlet "StudentServlet.java" --%>
-                                        <%ArrayList<Sondage> std =(ArrayList<Sondage>)request.getAttribute("listSondage");
-              String spageid=request.getParameter("page");
-              if(spageid!=null){
-                  System.out.println("***********************\n"+spageid+"**********************\n");
-                  int pageid=Integer.parseInt(spageid);
-                  int total=(int)(std.size()/10);
-                  int end=0;
-              if(pageid==1){end=total;}
-              else{
-                  pageid=pageid-1;
-                  pageid=pageid*total;
-                  end=pageid+total;
-              }}
-             // for(int i=pageid;i<end;i++){
-              for(int i=0;i<2;i++){%>
-                                    <%-- Arranging data in tabular form--%>
+                                        <%ArrayList<User_sondage> user_sondages =(ArrayList<User_sondage>)request.getAttribute("listUserSondage");
+                                     if(user_sondages.size()!=0){
+                                      for(int i=0;i<user_sondages.size();i++){%>
+                                                            <%-- Arranging data in tabular form--%>
                                     <tr>
-                                        <th scope="row"><%=std.get(i).getIntitule_son()%>
+                                        <th scope="row"><%=user_sondages.get(i).getEmployee().getName()%>
                                         </th>
-                                        <td><%=std.get(i).getDate_sondage()%>
+                                        <td><%=user_sondages.get(i).getSondage().getIntitule_son()%>
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary" href="editSondage?id=<%=std.get(i).getSondage_id()%>">Edit</a>
+                                            <a class="btn btn-primary" href="editUserSondage?id=<%=user_sondages.get(i).getUser_sondage_id()%>">Edit</a>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-danger " href="deleteSondage?id=<%=std.get(i).getSondage_id()%>">Delete</a>
+                                            <a class="btn btn-danger " href="deleteUserSondage?id=<%=user_sondages.get(i).getUser_sondage_id()%>">Delete</a>
                                         </td>
                                     </tr>
-                                        <%}%>
-
-
+                                        <%}}%>
                                 </table>
-
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -394,36 +371,23 @@
             </thead>
             <tbody>
 
-
             <%-- Fetching the attributes of the request object which was previously set by the servlet "StudentServlet.java" --%>
-                <%ArrayList<Sondage> stdd =(ArrayList<Sondage>)request.getAttribute("listSondage");
-            String spageidd=request.getParameter("page");
-            if(spageid!=null){
-            System.out.println("***********************\n"+spageid+"**********************\n");
-            int pageid=Integer.parseInt(spageid);
-            int total=(int)(std.size()/10);
-            int end=0;
-            if(pageid==1){end=total;}
-            else{
-                pageid=pageid-1;
-                pageid=pageid*total;
-                end=pageid+total;
-                }}
-            // for(int i=pageid;i<end;i++){
-            for(int i=0;i<std.size();i++){%>
+                <%ArrayList<Sondage> listSondage =(ArrayList<Sondage>)request.getAttribute("listSondage");
+            if(listSondage.size()!=0){
+            for(int i=0;i<listSondage.size();i++){%>
             <%-- Arranging data in tabular form--%>
             <tr>
-                <th scope="row"><%=std.get(i).getIntitule_son()%>
+                <th scope="row"><%=listSondage.get(i).getIntitule_son()%>
                 </th>
-                <td><%=std.get(i).getDate_sondage()%>
+                <td><%=listSondage.get(i).getDate_sondage()%>
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="editSondage?id=<%=std.get(i).getSondage_id()%>">Edit</a>
+                    <a class="btn btn-primary" href="editSondage?id=<%=listSondage.get(i).getSondage_id()%>">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a class="btn btn-danger " href="deleteSondage?id=<%=std.get(i).getSondage_id()%>">Delete</a>
+                    <a class="btn btn-danger " href="deleteSondage?id=<%=listSondage.get(i).getSondage_id()%>">Delete</a>
                 </td>
             </tr>
-                <%}
+                <%}}
             %>
         </table>
     </div>

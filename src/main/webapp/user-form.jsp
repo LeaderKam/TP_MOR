@@ -4,6 +4,8 @@
 <%@ page import="test.testjpa.domain.Employee" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="servlet.dao.DepartmentDao" %>
+<%@ page import="test.testjpa.domain.Department" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -54,37 +56,26 @@
 	</center>
 </div>
 <% String id=request.getParameter("id");
-    SondageDao sondageDao=new SondageDao();
-    String nomSondage=sondageDao.getSondage(Long.parseLong(id)).getIntitule_son();
-    Date sondage=sondageDao.getSondage(Long.parseLong(id)).getDate_sondage();
-    String nomEmployee=sondageDao.getSondage(Long.parseLong(id)).getEmployee().getName();
-
-    Long idEmployee=sondageDao.getSondage(Long.parseLong(id)).getEmployee().getId();
-
+    DepartmentDao departmentDao= new DepartmentDao();
+    Department departement = departmentDao.getDepartment(Long.valueOf(id));
 %>
 <div id="largeur" class="container">
-    <form method="post" action="/updateSondage">
-        <input type="hidden" name="idSondage" required class="form-control" value="<%=id%>">
+    <form method="post" action="/updateUser">
+        <input type="hidden" name="idEmployee" required class="form-control" value="<%=id%>">
         <div class="form-group row">
             <label for="name" class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-8">
-                <input type="text" id="name" name="nomSondage" required class="form-control" value="<%=nomSondage%>">
+                <input type="text" id="name" name="nomEmployee" required class="form-control" >
             </div>
         </div>
         <div class="form-group row">
-            <label for="dateSondage" class="col-sm-2 col-form-label">Department</label>
+            <label for="idDepartement" class="col-sm-2 col-form-label">Department</label>
             <div class="col-sm-8">
-                <input type="datetime" id="dateSondage" required name="department" value="<%=sondage%>" class="form-control" placeholder="department">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="idEmployee" class="col-sm-2 col-form-label">Employee</label>
-            <div class="col-sm-8">
-                <select name="idEmployee" id="idEmployee" class="form-control inputstl" id="nomEmploye">
-                    <option value="<%=idEmployee%>"><%=nomEmployee%></option>
-                    <% ArrayList<Employee> emp = (ArrayList<Employee>) request.getAttribute("user");
-                        for (int i = 0; i < emp.size(); i++) {%>
-                    <option value="<%=emp.get(i).getId()%>"><%=emp.get(i).getName()%></option>
+                <select name="idDepartement" id="idDepartement" class="form-control inputstl" id="idDepartement">
+                    <option value="<%=id%>"><%=departement.getName()%></option>
+                    <% ArrayList<Department> departments = (ArrayList<Department>) request.getAttribute("departments");
+                        for (int i = 0; i < departments.size(); i++) {%>
+                    <option value="<%=departments.get(i).getId()%>"><%=departments.get(i).getName()%></option>
 
                     <%}%>
 

@@ -4,6 +4,8 @@ package fr.istic.sir.rest;
 import com.sun.jersey.api.view.Viewable;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import servlet.dao.UserDao;
 import servlet.dao.rest.*;
 import test.testjpa.domain.Employee;
 import test.testjpa.domain.rest.EmployeeRest;
@@ -27,36 +29,6 @@ public class SampleWebService {
         return "Hello, how are you?";
     }
 
-    // @GET
-    //  @Path("/home/{name}")
-    // @Produces(MediaType.TEXT_HTML)
-    // public String getHome(@PathParam("name") String name) {
-    //  return "Hello, how are you?"+name;
-    //}
-
-/*
-    private EmployeeRestDao userDao = new EmployeeRestDao();
-
-    private SondageRestDao sondageDao = new SondageRestDao();
-
-    //private UserSondageDao userSondageDao = new UserSondageDao();
-
-    private DepartmentRestDao departmentDao = new DepartmentRestDao();
-
-   // private ReunionDao reunionDao = new ReunionDao();
-
-   // private UserReunionDao userReunionDao = new UserReunionDao();
-
-    //private SondageController sondageController = new SondageController();
-
-
-    @GET
-    @Path("index")
-    public Viewable index(@Context HttpServletRequest request) {
-        request.setAttribute("obj", new String("IT Works"));
-        System.out.println("/INDEX called");
-        return new Viewable("/test.jsp", null);
-    }*/
    private List<Book> books = new ArrayList<Book>();
 
     public SampleWebService() {
@@ -79,9 +51,12 @@ public class SampleWebService {
     @GET
     @Path("employee")
     @Produces({ MediaType.APPLICATION_JSON })
-    public Collection<EmployeeRest> listEmployee() {
-        EmployeeRestDao userRestDao= new EmployeeRestDao();
-        List<EmployeeRest> employees=userRestDao.getAllUser();
+    @CrossOrigin(origins = "http://localhost:4200")
+    public Collection<Employee> listEmployee() {
+        //EmployeeRestDao userRestDao= new EmployeeRestDao();
+        //List<EmployeeRest> employees=userRestDao.getAllUser();
+        UserDao userDao = new UserDao();
+        List<Employee> employees= userDao.getAllUser();
         return employees;
     }
     @GET

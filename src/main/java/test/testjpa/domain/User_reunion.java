@@ -1,5 +1,7 @@
 package test.testjpa.domain;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -30,7 +32,8 @@ public class User_reunion {
         this.user_reunion_id = user_reunion_id;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JsonBackReference
     public Employee getEmployee() {
         return employee;
     }
@@ -40,6 +43,7 @@ public class User_reunion {
     }
 
     @ManyToOne
+    @JsonBackReference
     public Reunion getReunion() {
         return reunion;
     }

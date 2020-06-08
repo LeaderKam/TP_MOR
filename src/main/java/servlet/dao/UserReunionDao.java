@@ -54,7 +54,7 @@ public class UserReunionDao {
         try {
             // start a transaction
             tx.begin();
-            // save the student object
+            // save the userReunion
             test.getManager().persist(userReunion);
             // commit transaction
             tx.commit();

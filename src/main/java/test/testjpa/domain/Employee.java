@@ -1,5 +1,8 @@
 package test.testjpa.domain;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import javax.persistence.*;
 
 /**
@@ -59,6 +62,7 @@ public class Employee implements Serializable {
 	}
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonBackReference
 	public Department getDepartment() {
 		return department;
 	}
@@ -68,6 +72,7 @@ public class Employee implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "employee")
+	@JsonManagedReference
 	public List<Sondage> getSondages() {
 		return sondages;
 	}
@@ -76,7 +81,8 @@ public class Employee implements Serializable {
 		this.sondages = sondages;
 	}
 
-	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employee",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JsonManagedReference
 	public List<User_reunion> getUser_reunions() {
 		return user_reunions;
 	}
@@ -86,6 +92,7 @@ public class Employee implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@JsonManagedReference
 	public List<User_sondage> getUser_sondages() {
 		return user_sondages;
 	}

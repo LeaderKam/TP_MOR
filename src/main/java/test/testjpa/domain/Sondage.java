@@ -1,5 +1,8 @@
 package test.testjpa.domain;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,6 +56,7 @@ public abstract class Sondage implements Serializable {
     }
 
     @ManyToOne
+    @JsonBackReference
     public Employee getEmployee() {
         return employee;
     }
@@ -62,6 +66,7 @@ public abstract class Sondage implements Serializable {
     }
 
     @OneToMany(mappedBy = "employee",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     public List<User_sondage> getUser_sondages() {
         return user_sondages;
     }

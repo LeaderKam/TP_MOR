@@ -1,5 +1,7 @@
 package test.testjpa.domain;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -32,6 +34,7 @@ public abstract class User_sondage {
     }
 
     @ManyToOne
+    @JsonBackReference
     public Employee getEmployee() {
         return employee;
     }
@@ -41,6 +44,7 @@ public abstract class User_sondage {
     }
 
     @ManyToOne
+    @JsonBackReference
     public Sondage getSondage() {
         return sondage;
     }

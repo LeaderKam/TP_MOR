@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="test.testjpa.domain.*" %>
+<%@ page import="servlet.dao.ReunionDao" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,7 +20,7 @@
        border-radius: 10px;
         width:700px;
         margin-top:-100px;
-        height:300px;
+        height:400px;
         padding:100px 80px;
         background:#EFEFEF;
         position:relative;
@@ -45,55 +46,63 @@
 
 </div>
 <% String id=request.getParameter("id");
-    SondageDao sondageDao=new SondageDao();
-    Sondage sondage=sondageDao.getSondage(Long.parseLong(id));
-    String nomSondage = sondage.getIntitule_son();
-    Date dateReunion=sondageDao.getSondage(Long.parseLong(id)).getDate_sondage();
-    String nomEmployee=sondageDao.getSondage(Long.parseLong(id)).getEmployee().getName();
-
-    Long idEmployee=sondageDao.getSondage(Long.parseLong(id)).getEmployee().getId();
-
+    ReunionDao reunionDao= new ReunionDao();
 %>
 <div id="largeur" class="container">
-    <form method="post" action="/updateSondage">
-        <input type="hidden" name="idSondage" required class="form-control" value="<%=id%>">
+    <form method="post" action="/updateReunion">
         <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <label for="name" class="col-sm-4 col-form-label">Nom reunion</label>
             <div class="col-sm-8">
-                <input type="text" id="name" name="nomSondage" required class="form-control" value="<%=nomSondage%>">
+                <input type="hidden" id="idReunion" name="idReunion" value="<%=id%>" class="form-control"
+                       placeholder="nom reunion" value="">
+                <input type="text" id="name" name="nomReunion" required class="form-control"
+                       placeholder="nom reunion" value="">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="name1" class="col-sm-4 col-form-label">Résumé reunion</label>
+            <div class="col-sm-8">
+                <input type="text" id="name1" name="resumeReunion" required class="form-control"
+                       placeholder="résumé de la reunion" value="">
+            </div>
+        </div>
+        <div class="form-groupe row">
+            <label for="pauseCafe" class="col-sm-4 col-form-label">Paufe cafe</label>
+            <div class="form-check col-sm-4">
+                <input class="form-check-input" type="radio" name="pauseCafe" required placeholder="Pause cafe" value="oui" id="pauseCafe1">
+                <label class="form-check-label" for="pauseCafe1">
+                    Oui
+                </label>
+            </div>
+            <div class="form-check col-sm-4">
+                <input class="form-check-input" type="radio" name="pauseCafe" required placeholder="Pause cafe" value="non" id="pauseCafe">
+                <label class="form-check-label" for="pauseCafe">
+                    non
+                </label>
             </div>
         </div>
         <div class="form-group row">
-            <label for="dateReunion" class="col-sm-2 col-form-label">Date reunion</label>
+            <label for="dateReunion" class="col-sm-4 col-form-label">Date de la réunion</label>
             <div class="col-sm-8">
                 <select name="dateReunion" class="form-control inputstl" id="dateReunion">
-                        <% ArrayList<User_sondage> user_sondages = (ArrayList<User_sondage>) request.getAttribute("listUserSondage");
-                            if(user_sondages.size()!=0){  for (int i = 0; i < user_sondages.size(); i++) {
+                    <option>-------choisir------</option>
+                    <% ArrayList<User_sondage> user_sondages = (ArrayList<User_sondage>) request.getAttribute("listUserSondage");
+                        if(user_sondages.size()!=0){  for (int i = 0; i < user_sondages.size(); i++) {
                             if(user_sondages.get(i) instanceof User_sondageDate){%>
                     <option value="<%=((User_sondageDate) user_sondages.get(i)).getDateChoisi()%>"><%=((User_sondageDate) user_sondages.get(i)).getDateChoisi()%></option>
-                        <% }else if (user_sondages.get(i) instanceof User_sondageLieuDate){%>
+                    <% }else if (user_sondages.get(i) instanceof User_sondageLieuDate){%>
                     <option value="<%=((User_sondageLieuDate) user_sondages.get(i)).getDateChoisi()%>"><%=((User_sondageLieuDate) user_sondages.get(i)).getDateChoisi()%></option>
 
-                        <%}}}%>
+                    <%}}}%>
+
+                </select>
             </div>
-        </div>
-        <div class="form-group row">
-            <label for="idEmployee" class="col-sm-2 col-form-label">Employee</label>
-            <div class="col-sm-8">
-                <select name="idEmployee" id="idEmployee" class="form-control inputstl" id="nomEmploye">
-                    <option value="<%=idEmployee%>"><%=nomEmployee%></option>
-                    <% ArrayList<Employee> emp = (ArrayList<Employee>) request.getAttribute("user");
-                        for (int i = 0; i < emp.size(); i++) {%>
-                    <option value="<%=emp.get(i).getId()%>"><%=emp.get(i).getName()%></option>
-
-                    <%}%>
-
-                </select>            </div>
         </div>
         <div class="form-group row">
             <center>
                 <div class="col-sm-8">
-                    <input type="submit" class="btn btn-primary" VALUE="Save">
+                    <input type="submit" class="btn btn-primary" VALUE="MODIFIER REUNION">
                 </div>
             </center>
         </div>

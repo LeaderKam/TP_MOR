@@ -50,7 +50,7 @@
 
         #head {
             margin-top: 0px;
-            height: 400px;
+            height: 200px;
             background: linear-gradient(darkblue, white);
             position: relative;
         }
@@ -77,12 +77,6 @@
 <div id="head">
     <center class="top">
         <h1 class="text-white">Reunion Management</h1>
-        <h2>
-            <a class="btn btn-success" href="new">Nouveau Reunion</a>
-            &nbsp;&nbsp;&nbsp;
-            <a class="btn btn-primary" href="list-reunion?page=1">Liste des reunion</a>
-
-        </h2>
     </center>
 </div>
 
@@ -140,15 +134,23 @@
                                     </div>
                                 </div>
 
-
-                                <div class="form-group row">
-                                    <label for="dateCreationReunion" class="col-sm-4 col-form-label">Date création de reunion</label>
-                                    <div class="col-sm-8">
-                                        <input type="date" id="dateCreationReunion" name="dateReunion"  class="form-control">
+                                <div class="form-groupe row">
+                                    <label for="pauseCafe" class="col-sm-4 col-form-label">Paufe cafe</label>
+                                    <div class="form-check col-sm-4">
+                                        <input class="form-check-input" type="radio" name="pauseCafe" required placeholder="Pause cafe" value="oui" id="pauseCafe1">
+                                        <label class="form-check-label" for="pauseCafe1">
+                                            Oui
+                                        </label>
+                                    </div>
+                                    <div class="form-check col-sm-4">
+                                        <input class="form-check-input" type="radio" name="pauseCafe" required placeholder="Pause cafe" value="non" id="pauseCafe">
+                                        <label class="form-check-label" for="pauseCafe">
+                                            non
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="nomEmploye" class="col-sm-4 col-form-label">Date de la réunion</label>
+                                    <label for="dateReunion" class="col-sm-4 col-form-label">Date de la réunion</label>
                                     <div class="col-sm-8">
                                         <select name="dateReunion" class="form-control inputstl" id="dateReunion">
                                             <% ArrayList<User_sondage> user_sondages = (ArrayList<User_sondage>) request.getAttribute("listUserSondage");
@@ -208,7 +210,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="nomEmploye" class="col-sm-4 col-form-label">Nom employe</label>
+                                    <label for="nomEmploye1" class="col-sm-4 col-form-label">Nom employe</label>
                                     <div class="col-sm-8">
                                         <select name="idEmployee" class="form-control inputstl" id="nomEmploye1">
                                             <%  ArrayList<Employee> employees=(ArrayList<Employee>) request.getAttribute("listUser");
@@ -260,44 +262,33 @@
                     <div class="card-body">
                         <div class="container">
                             <form method="get" action="/participantReunion">
-                                <div class="form-inline">
-                                    <select name="idReunion" class="form-control " >
-                                        <% ArrayList<User_reunion> user_reunions= (ArrayList<User_reunion>) request.getAttribute("user_reunions");
-                                                if (reunion.size()!=0){
-                                                    for (int i = 0; i < reunion.size(); i++) {%>
-
-                                        <option value="<%=reunion.get(i).getReunion_id()%>"><%=reunion.get(i).getIntitule_reunion()%></option>
-
-                                        <%}
-                                        }%>
-
-                                    </select>
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">RECHERCHER
-                                    </button>
-                                </div>
                                 <table class="table table-striped" width="500px;" align="center">
                                     <thead class="table-dark">
                                     <tr>
-                                        <th scope="col"><b>Nom</b></th>
+                                        <th scope="col"><b>Nom employee</b></th>
+                                        <th scope="col"><b>Nom reunion</b></th>
                                         <th scope="col"><b>Allergies</b></th>
                                         <th scope="col"><b>Actions</b></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <%-- Fetching the attributes of the request object which was previously set by the servlet "StudentServlet.java" --%>
-                                        <%if (user_reunions!=null){
+                                        <% ArrayList<User_reunion> user_reunions= (ArrayList<User_reunion>) request.getAttribute("listUserReunion");
+                                            if (user_reunions!=null){
                                             if(user_reunions.size()!=0){
                                                 for(int i=0;i<user_reunions.size();i++){%>
                                     <%-- Arranging data in tabular form--%>
                                     <tr>
                                         <th scope="row"><%=user_reunions.get(i).getEmployee().getName()%>
                                         </th>
+                                        <td scope="row"><%=user_reunions.get(i).getReunion().getIntitule_reunion()%>
+                                        </td>
                                         <td><%=user_reunions.get(i).getAllergie()%>
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary" href="editReunion?id=<%=user_reunions.get(i).getEmployee().getName()%>">Edit</a>
+                                            <a class="btn btn-primary" href="editReunion?id=<%=user_reunions.get(i).getUser_reunion_id()%>">Edit</a>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            <a class="btn btn-danger " href="deleteReunion?id=<%=user_reunions.get(i).getAllergie()%>">Delete</a>
+                                            <a class="btn btn-danger " href="deleteReunion?id=<%=user_reunions.get(i).getUser_reunion_id()%>">Delete</a>
                                         </td>
                                     </tr>
                                         <%}

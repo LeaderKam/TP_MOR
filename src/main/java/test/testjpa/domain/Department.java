@@ -3,6 +3,9 @@
  */
 package test.testjpa.domain;
 
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -40,6 +43,7 @@ public class Department {
 	}
 
 	@OneToMany(mappedBy = "department")
+	@JsonManagedReference
 	public List<Employee> getEmployees() {
 		return employees;
 	}

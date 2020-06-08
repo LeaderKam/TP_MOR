@@ -79,12 +79,11 @@ public class ReunionDao {
             // start a transaction
             tx.begin();
             // save the student object
-            boolean t=test.getManager().contains(reunion);
-            if (t){
+
                 test.getManager().merge(reunion);
                 // commit transaction
                 tx.commit();
-            }
+
 
         } catch (Exception e) {
             if (tx != null) {
