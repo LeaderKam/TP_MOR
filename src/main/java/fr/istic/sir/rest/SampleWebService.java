@@ -4,10 +4,13 @@ package fr.istic.sir.rest;
 import com.sun.jersey.api.view.Viewable;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import servlet.dao.ReunionDao;
+import servlet.dao.SondageDao;
 import servlet.dao.UserDao;
 import servlet.dao.rest.*;
 import test.testjpa.domain.Employee;
+import test.testjpa.domain.Reunion;
+import test.testjpa.domain.Sondage;
 import test.testjpa.domain.rest.EmployeeRest;
 
 
@@ -16,8 +19,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Path("/hello")
@@ -29,29 +35,9 @@ public class SampleWebService {
         return "Hello, how are you?";
     }
 
-   private List<Book> books = new ArrayList<Book>();
-
-    public SampleWebService() {
-        for (int i = 0; i < 10; i++) {
-            books.add(new Book(i, "Title " + i, "Author " + i, new Double(Math.random()*20).intValue()));
-        }
-
-    }
-    public void test(){
-        books.add(new Book(1, "kam test " + 1, "Author " + 1, new Double(Math.random()*20).intValue()));
-    }
-
-    @GET
-    @Path("test")
-    @Produces({ MediaType.APPLICATION_JSON })
-    public Collection<Book> list() {
-        test();
-        return books;
-    }
     @GET
     @Path("employee")
     @Produces({ MediaType.APPLICATION_JSON })
-    @CrossOrigin(origins = "http://localhost:4200")
     public Collection<Employee> listEmployee() {
         //EmployeeRestDao userRestDao= new EmployeeRestDao();
         //List<EmployeeRest> employees=userRestDao.getAllUser();
@@ -69,14 +55,39 @@ public class SampleWebService {
         System.out.println("/INDEX fj called");
         return new Viewable("/myform", null);
     }
-    @POST
-    @Path("home/ajout/")
-    @Produces({ MediaType.APPLICATION_JSON })
-    public void ajout(EmployeeRest user) {
-        EmployeeRestDao userRestDao= new EmployeeRestDao();
-        System.out.println("/INDEX fj called");
-        userRestDao.saveUser(user);
 
+    @GET
+    @Path("reunion")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response listReunion() {
+        ReunionDao reunionDao = new ReunionDao();
+        List<Reunion> reunions = reunionDao.getAllReunion();
+       // return reunions;
+        return Response
+                .ok(200)
+                .header("Access-Control-Allow-Origin", "*")
+                .entity(reunions)
+                .build();
+    }
+
+    @POST
+    @Path("reunion/add/")
+    @Consumes({ MediaType.APPLICATION_JSON })
+   // @Produces({ MediaType.APPLICATION_JSON })
+    public Response ajout(Reunion reunion) {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+       // Date date = formatter.parse(reunion.getDate_reunion());
+        ReunionDao reunionDao = new ReunionDao();
+       //@FormParam('name') a;
+        System.out.println("ajout de reuunion" + reunion.getDate_reunion());
+       // Reunion reunion1= new Reunion(reunion.getIntitule_reunion(),reunion.getResume_reunion(),reunion.getDate_reunion(),reunion.isPause_cafe());
+        reunionDao.saveReunion(reunion);
+      System.out.println(reunion.getIntitule_reunion());// reunion.setDate_reunion(new Date());
+        return Response
+                .ok(201)
+                .header("Access-Control-Allow-Origin", "*")
+                .entity(reunion)
+                .build();
     }
 
 

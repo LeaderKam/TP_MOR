@@ -117,7 +117,7 @@
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         <div class="container">
-                            <form method="post" action="creerReunion">
+                            <form method="post" action="creerDepartement">
                                 <div class="form-group row">
                                     <label for="nomDepartement" class="col-sm-4 col-form-label">Nom departement</label>
                                     <div class="col-sm-8">
@@ -153,22 +153,22 @@
                 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
                         <div class="container">
-                            <form method="post" action="creerReunion">
+                            <form method="post" action="insertUser">
                                 <div class="form-group row">
-                                    <label for="nomEmploye" class="col-sm-4 col-form-label">Nom employee</label>
+                                    <label for="nomEmployee" class="col-sm-4 col-form-label">Nom employee</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="nomEmploye" name="nomEmploye" required class="form-control"
-                                               placeholder="nom reunion" value="">
+                                        <input type="text" id="nomEmployee" name="nomEmployee" required class="form-control"
+                                               placeholder="nom employee" value="">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="dateReunion" class="col-sm-4 col-form-label">Date de la réunion</label>
+                                    <label for="idDepartement" class="col-sm-4 col-form-label">Departement</label>
                                     <div class="col-sm-8">
-                                        <select name="dateReunion" class="form-control inputstl" id="dateReunion">
+                                        <select name="idDepartement" class="form-control " id="idDepartement">
                                             <% ArrayList<Department> departments = (ArrayList<Department>) request.getAttribute("listDepartement");
                                                 if(departments.size()!=0){  for (int i = 0; i < departments.size(); i++) {%>
-                                            <option value="<%=departments.get(i).getId()%>"><%=departments.get(i).getId()%></option>
+                                            <option value="<%=departments.get(i).getId()%>"><%=departments.get(i).getName()%></option>
 
                                             <%}}%>
 

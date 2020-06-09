@@ -65,7 +65,7 @@ public class UserServlet extends HttpServlet {
         try {
             if ("/new".equals(action)) {
                 showNewForm(request, response);
-            } else if ("/insert".equals(action)) {
+            } else if ("/insertUser".equals(action)) {
                 insertUser(request, response);
             } else if ("/deleteUser".equals(action)) {
                 deleteUser(request, response);
@@ -102,6 +102,8 @@ public class UserServlet extends HttpServlet {
                 reunion(request, response);
             }else if ("/creerReunion".equals(action)) {
                 insertReunion(request, response);
+            }else if ("/creerDepartement".equals(action)) {
+                insertDepartement(request, response);
             }else if ("/editReunion".equals(action)) {
                 showEditReunionForm(request, response);
             }else if ("/updateReunion".equals(action)) {
@@ -169,12 +171,22 @@ public class UserServlet extends HttpServlet {
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        Department department = new Department("REACT");
+        String name = request.getParameter("nomEmployee");
+        System.out.println("************\n"+name);
+
+        String idDepartement = request.getParameter("idDepartement");
+        System.out.println("************\n"+idDepartement);
+        Department department = departmentDao.getDepartment(Long.valueOf(idDepartement));
         Employee newUser = new Employee(name, department);
         userDao.saveUser(newUser);
-        response.sendRedirect("list");
+        response.sendRedirect("list-user");
+    }
+    private void insertDepartement(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+        String name = request.getParameter("nomDepartement");
+        Department department = new Department(name);
+        departmentDao.saveDepartment(department);
+        response.sendRedirect("list-user");
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response)

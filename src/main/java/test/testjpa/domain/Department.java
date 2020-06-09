@@ -42,7 +42,7 @@ public class Department {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "department")
+	@OneToMany(mappedBy = "department",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JsonManagedReference
 	public List<Employee> getEmployees() {
 		return employees;
