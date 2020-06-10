@@ -23,7 +23,7 @@ nous pouvons avoir une base de donnée relationnels sans avoir à créer toutes 
 Nous avons :
       - un package dans lequel se trouve toutes nos entités
       - un package DAO où se trouve nos service pour accéder aux éléments de notre base de donnée
-      - un package service dans lequel se une servlet qui se comporte comme un contrôleur. cette classe peut être optimiser en plusieur sous classe.
+      - un package service dans lequel se trouve une servlet du nom de Uservlet qui se comporte comme un contrôleur. cette classe peut être optimiser en plusieur sous classe.
       - Une classe qui nous permet de gerer les routes avec JaRX 
 
 # Problèmes rencontrés
