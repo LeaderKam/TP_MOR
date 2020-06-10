@@ -28,6 +28,8 @@ Nous avons :
 
 # Problèmes rencontrés
 
-Nous avons rencontrer plein de problèmes lors de ce TP mais la volonté de reussir le TP nous a emmener à faire des recherches pour resoudre des problèmes comme les relations qui ne sont pas charger automatiquement.
-Comme il est dit "le cerveau se nourit d'obstacle". 
+Nous avons rencontrer plein de problèmes lors de ce TP mais la volonté de reussir le TP nous a emmener à faire des recherches pour resoudre des problèmes comme les relations qui ne sont pas charger automatiquement, accès refusé lors de la requête POST, GET ou autres, les boucles infinis de chargement d'netités lors de la recuperation d'enetité sous forme de JSON
 
+Au delà de tous ces difficultés nous avons appris beaucoup de choses qui pourrons nous aider dans notre future carrière. Nous avons même fait la decouverte de Spring( framework) qui est beaucoup plus faciles à implementer, et facilite le developpemnt des api et evite les problèmes sus mentionnés. 
+
+Comme il est dit "le cerveau se nourit d'obstacle". 
